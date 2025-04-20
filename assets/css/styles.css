@@ -1,0 +1,662 @@
+/* Reset de la page */
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: gray;
+}
+
+/* HEADER STYLES */
+header {
+    background-color: lightgray;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+}
+
+/* NAV HEADER */
+#navbar-header {
+    display: flex;
+    background-color: lightgray;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px 60px 10px 60px;
+}
+
+#navbar-header ul li {
+    padding: 5px;
+    margin: 0 10px;
+    display: inline-flex;
+    background-color: lightgray;
+    list-style: none;
+    text-align: center;
+}
+
+#navbar-header a {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+}
+
+#navbar-header a:hover {
+    background-color: white;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+#navbar-header a:visited,
+#nav_dashboard a:visited,
+#main-part a:visited,
+.user-table a:visited {
+    text-decoration: none;
+}
+
+/* CONNECT BUTTON */
+#connect_button, #disconnect_button {
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: gray;
+    margin-left: auto;
+}
+
+#connect_button:hover {
+    background-color: white;
+    color: black;
+}
+
+#disconnect_button:hover {
+    background-color: brown;
+    color: white;
+}
+
+.login_button {
+    color: white;
+    background-color: gray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.login_button:hover {
+    background-color: white;
+    color: black;
+}
+
+.badge_env_infos {
+    display: inline-block;
+    font-size: smaller;
+    background-color: lightyellow;
+    padding: 2px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.small_message {
+    font-size: smaller;
+    font-style: italic;
+}
+
+/* NAV DASHBOARD */
+#nav_dashboard {
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+}
+
+#nav_dashboard ul {
+    list-style: none;
+}
+
+#nav_dashboard li {
+    padding-bottom: 5px;
+}
+
+#nav_dashboard a {
+    text-decoration: none;
+}
+
+#main-part {
+    background-color: #fff;
+    max-width: 1000px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-part h2 {
+    margin-bottom: 10px;
+}
+
+#user_resume {
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+.main-footer {
+    font-size: small;
+    color: black;
+    background-color: lightgrey;
+    padding: 15px;
+    text-align: center;
+}
+
+.main-footer a {
+    text-decoration: none;
+    color: black;
+}
+
+.main-footer a:hover {
+    text-decoration: underline;
+}
+
+.error_message,
+.success_message {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.error_message {
+    background-color: #ffe5e5;
+    color: #a33;
+    border: 1px solid #f5c2c2;
+}
+
+.success_message {
+    background-color: #e0ffe5;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+
+/* Style de base du tableau */
+.user-table {
+    width: 100%; /* Prend toute la largeur disponible */
+    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Style des cellules (lignes et colonnes) */
+.user-table th, .user-table td {
+    padding: 10px; /* Espacement interne */
+    border: 1px solid #ddd; /* Bordure grise */
+}
+
+/* Style des en-têtes */
+.user-table th {
+    background-color: #333; /* Couleur de fond */
+    color: white; /* Texte blanc */
+    text-align: center;
+}
+
+/* Alternance des couleurs de ligne */
+.user-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Gris clair */
+}
+
+.user-table tr:nth-child(odd) {
+    background-color: white; /* Blanc */
+}
+
+/* Effet au survol */
+.user-table tr:hover {
+    background-color: #ddd; /* Gris plus foncé au survol */
+}
+
+.user-table a {
+    text-decoration: none;
+}
+/* */ /* */ /* */ /* */
+.user-table-vertical {
+    width: 50%; /* Ajuste la largeur */
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-size: 16px;
+    text-align: center;
+}
+
+.user-table-vertical th {
+    background-color: #333;
+    color: white;
+    width: 30%; /* Largeur fixe pour les titres */
+    text-align: left;
+}
+
+.user-table-vertical th, .user-table-vertical td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.user-table-vertical tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.user-table-vertical tr:hover {
+    background-color: #ddd;
+}
+
+.OEB {
+    display: inline-block;
+
+    border-radius: 5px;
+    background-color: #ddd;
+}
+
+.OEB a {
+    border-radius: 5px;
+    padding: 2px 10px 2px 10px;
+    text-decoration: none;
+}
+
+.OEB a:hover {
+    background-color: gray;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+}
+
+.backupLink {
+    text-decoration: none;
+    margin-top: auto; /* Pousse le lien vers le bas */
+    align-self: center; /* Centre le lien horizontalement */
+}
+
+#quantity {
+    width: 60px; /* Ajuste la largeur selon tes besoins */
+    padding: 5px;
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+button img {
+    width: 1.2em; /* Ajuste selon le rendu souhaité */
+    height: 1.2em;
+    vertical-align: middle;
+}
+
+.shop_submit_button, .shop_clear_button {
+    padding: 10px;
+    width: 90px;
+}
+
+.shop_submit_button:hover {
+    background-color: lightgreen;
+}
+
+.shop_clear_button:hover {
+    background-color: lightcoral;
+}
+
+.shop_quantity_input {
+    width: 20px;
+}
+
+.dashboard_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px;
+    justify-content: center;
+}
+
+.dashboard_item {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+}
+
+.dashboard_item:hover {
+    background-color: lightgray;
+    color: black;
+}
+
+.login_form {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.login_form form {
+    width: 300px; /* Largeur fixe du formulaire */
+    height: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login_form label {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: lightgray;
+    border-radius: 20px;
+}
+
+.login_form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.login_form label:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.add_user_button {
+}
+
+.news {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.news h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #222;
+}
+
+.news img {
+    display: block;
+    margin: 10px 0;
+    max-width: 100%;
+    height: auto;
+}
+
+.news p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.news_readmore {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.95em;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.news_readmore:hover {
+    text-decoration: underline;
+}
+
+.news em {
+    font-size: 0.85em;
+    color: #666;
+}
+
+#connect_button_responsive,
+#disconnect_button_responsive {
+    display: none;
+}
+
+/* Snack shop */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: white;
+    width: 100%;
+    max-width: 280px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.product-card h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.product-card .desc {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.product-card img.product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #f2f2f2;
+}
+
+.product-image {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.selected-count {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 5px;
+}
+
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+#live-summary {
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+#order-summary {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Admin actions: responsive visibility */
+.desktop-action {
+    display: inline;
+}
+
+.mobile-action {
+    display: none;
+}
+
+/*  Debut du responsive */
+
+.toggle_menu {
+    display: none; /* masqué en desktop */
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle_menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+}
+
+@media screen and (max-width: 768px) {
+    #main-part {
+        width: 95%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    #main-part h2 {
+        font-size: 1.4em;
+    }
+
+    #navbar-header {
+        position: absolute;
+        top: 65px; /* hauteur du header */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: lightgray;
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 0; /* ❗️supprime l'ancien margin */
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 999;
+    }
+
+    #navbar-header.show {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .toggle_menu {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .toggle_menu span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+    }
+
+    #navbar-header ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        width: 100%;
+    }
+
+    #navbar-header li {
+        padding: 5px;
+        margin: 0 10px;
+        display: inline-flex;
+        background-color: lightgray;
+        list-style: none;
+        text-align: center;
+    }
+
+    #navbar-header li a {
+        padding: 5px;
+        border-radius: 5px;
+        background-color: gray;
+        text-decoration: none;
+        color: white;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #navbar-header li a:hover {
+        background-color: white;
+        color: black;
+    }
+
+
+    /* ✅ Responsive login/logout icons */
+    #connect_button_responsive,
+    #disconnect_button_responsive {
+        text-align: center;
+        padding: 10px;
+        background-color: gray;
+        color: white;
+        text-decoration: none;
+        display: block;
+        border-radius: 5px;
+    }
+
+    #connect_button,
+    #disconnect_button {
+        display: none;
+    }
+
+    /* Snack shop */
+    .col-id,
+    .col-desc,
+    .col-access {
+        display: none;
+    }
+
+    .desktop-action {
+        display: none;
+    }
+
+    .mobile-action {
+        display: inline;
+    }
+
+}

@@ -1,0 +1,17 @@
+# Fichiers sensibles
+config/config.php
+config/db_connect.php
+
+# Dossiers à ignorer
+node_modules/
+vendor/
+.env
+.tmp.driveupload
+.idea/
+.vscode/
+__pycache__/
+/db/*.db
+
+# Fichiers systeme
+.DS_Store
+Thumbs.db
