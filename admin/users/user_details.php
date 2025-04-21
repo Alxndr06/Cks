@@ -3,17 +3,14 @@ require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../config/db_connect.php';
 
 checkAdmin();
-getCsrfToken();
 checkMethodPost();
-// Vérification du token CSRF
 checkCsrfToken();
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    die("<div class='alert'>Access denied</div>");
-}
-
 
 // Récupération des informations de l'utilisateur
-if (!isset($_POST['id'])) die("Unknown user");
+if (!isset($_POST['id'])) {
+    redirectWithError('Unknown user ID.', 'user_list.php');
+}
+
 $id = $_POST['id'];
 
 //On récupére l'utilisateur
@@ -21,8 +18,9 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$id]);
 $user = $stmt->fetch();
 
-if (!$user) die("Unknown user");
-
+if (!$user) {
+    redirectWithError('User does not exist.', 'user_list.php');
+}
 ?>
 
 <div id="main-part">
@@ -53,19 +51,19 @@ if (!$user) die("Unknown user");
         </tr>
         <tr>
             <th>CREATED</th>
-            <td><?= date("d/m/Y H:i", strtotime($user['created_at'])) ?></td>
+            <td><?= htmlspecialchars(date("d/m/Y H:i", strtotime($user['created_at']))) ?></td>
         </tr>
         <tr>
             <th>DEBT</th>
-            <td><?= colorDebt((float)$user['note']) ?> €</td>
+            <td><?= htmlspecialchars(colorDebt((float)$user['note'])) ?> €</td>
         </tr>
         <tr>
             <th>LAST PAYMENT</th>
-            <td>available soon</td>
+            <td><em style="color: gray;">Coming soon</em></td>
         </tr>
         <tr>
             <th>TOTAL SPENT</th>
-            <td><?=  (float)$user['total_spent'] ?> €</td>
+            <td><?=  htmlspecialchars((float)$user['total_spent']) ?> €</td>
         </tr>
         <tr>
             <th>ACCOUNT STATUS</th>

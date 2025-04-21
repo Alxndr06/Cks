@@ -11,6 +11,8 @@ vendor/
 .vscode/
 __pycache__/
 /db/*.db
+/uploads/*
+!uploads/.gitkeep
 
 # Fichiers systeme
 .DS_Store
