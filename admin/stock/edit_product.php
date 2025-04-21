@@ -8,7 +8,7 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
     redirectWithError('Invalid product ID', 'stock_management.php');
 }
 
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
 $stmt->execute([$id]);
@@ -25,8 +25,8 @@ $prvsStock = $product['stock_quantity'];
 $prvsRestricted = $product['restricted'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = sanitize($_POST['name']);
-    $description = sanitize($_POST['description']);
+    $name = trim($_POST['name']);
+    $description = trim($_POST['description']);
     $price = $_POST['price'];
     $stock_quantity = $_POST['stock_quantity'];
     $restricted = $_POST['restricted'];
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" id="description" name="description" min="1" max="999" value="<?= htmlspecialchars($product['description']) ?>"><br><br>
 
         <label for="price">Price :</label>
-        <input type="number" step="0.01" id="price" name="price" max="999" value="<?= htmlspecialchars((float)$product['price']) ?>" required><br><br>
+        <input type="number" step="0.01" id="price" name="price" min="0" max="999" value="<?= htmlspecialchars((float)$product['price']) ?>" required><br><br>
 
         <label for="stock_quantity">Stock quantity :</label>
         <input type="number" id="stock_quantity" name="stock_quantity" value="<?= htmlspecialchars($product['stock_quantity']) ?>" required><br><br>

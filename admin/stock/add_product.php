@@ -5,11 +5,13 @@ require_once __DIR__ . '/../../config/db_connect.php';
 checkAdmin();
 $csrf_token = getCsrfToken();
 
-//LOGIQUE ajout d'utilisateur
+//LOGIQUE ajout de produits
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     checkCsrfToken();
-    $name = sanitize(strtolower($_POST['name']));
-    $description = sanitize($_POST['description']);
+    $nameRaw = trim($_POST['name']); // Stocké tel quel
+    $nameCheck = strtolower($nameRaw); // Pour la vérification unicité
+    $name = $nameRaw;
+    $description = trim($_POST['description']);
     $price = $_POST['price'];
     $quantity = $_POST['quantity'];
     $restricted = $_POST['restricted'];
@@ -26,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     //Vérification de l'unicité du produit
-    $stmt = $pdo->prepare('SELECT id FROM products WHERE name = ?');
-    $stmt->execute([$name]);
+    $stmt = $pdo->prepare('SELECT id FROM products WHERE LOWER(name) = ?');
+    $stmt->execute([$nameCheck]);
     if ($stmt->fetch()) {
-        redirectWithError('Product already exists: "' . htmlspecialchars($name) . '"', 'add_product.php');
+        redirectWithError('Product already exists: "' . htmlspecialchars($nameRaw) . '"', 'add_product.php');
     }
 
     //Upload de l'image
@@ -78,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="text" id="description" name="description"><br><br>
 
             <label for="price">Price :</label>
-            <input type="number" step="0.01" id="price" name="price" max="999" required><br><br>
+            <input type="number" step="0.01" id="price" name="price" min="0" max="999" required><br><br>
 
             <label for="quantity">Quantity :</label>
             <input type="number" id="quantity" name="quantity" min="1" max="999" required><br><br>
