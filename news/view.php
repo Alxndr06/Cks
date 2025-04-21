@@ -14,7 +14,7 @@ $article = $stmt->fetch();
 ?>
 
 <div id="main-part">
-    <h2>Latest news</h2>
+    <h2>Read article</h2>
     <div class="news_read">
 
     <h1><?= htmlspecialchars($article['title']) ?></h1>

@@ -8,7 +8,7 @@ $news = $stmt->fetchAll();
 ?>
 
     <div id="main-part">
-        <h2>Latest news</h2>
+        <h2>All articles</h2>
         <?php echo displayErrorOrSuccessMessage() ?>
         <?php foreach ($news as $article): ?>
             <div class="news">
