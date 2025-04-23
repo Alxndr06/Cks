@@ -11,7 +11,8 @@ if (!isset($_POST['id'])) {
     redirectWithError('Unknown user ID.', 'user_list.php');
 }
 
-$id = $_POST['id'];
+$id = (int) $_POST['id'];
+
 
 //On récupére l'utilisateur
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
@@ -55,7 +56,7 @@ if (!$user) {
         </tr>
         <tr>
             <th>DEBT</th>
-            <td><?= htmlspecialchars(colorDebt((float)$user['note'])) ?> €</td>
+            <td><?= colorDebt((float)$user['note']) ?> €</td>
         </tr>
         <tr>
             <th>LAST PAYMENT</th>
@@ -63,7 +64,7 @@ if (!$user) {
         </tr>
         <tr>
             <th>TOTAL SPENT</th>
-            <td><?=  htmlspecialchars((float)$user['total_spent']) ?> €</td>
+            <td><?= (float)$user['total_spent'] ?> €</td>
         </tr>
         <tr>
             <th>ACCOUNT STATUS</th>
