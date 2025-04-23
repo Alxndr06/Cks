@@ -96,6 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     logAction($pdo, $_SESSION['id'], $user['id'], 'bill_user', $logMessage);
 
     redirectWithSuccess('User has been billed and order recorded', 'user_list.php');
+} else {
+    redirectWithError('Invalid form method', 'user_list.php');
 }
 ?>
 
