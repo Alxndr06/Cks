@@ -14,7 +14,7 @@ require_once __DIR__ . '/../Enums/Environment.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="<?= $base_url ?>/assets/css/styles.css">
-    <script src="<?= $base_url ?>/assets/js/script.js" defer></script>
+    <script src="<?= $base_url ?>/assets/js/script.js?v=1" defer></script>
     <title>Cks App - Your business coffee shop</title>
 </head>
 
