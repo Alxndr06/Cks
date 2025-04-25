@@ -20,23 +20,32 @@ if (!$user) {
 }
 
 // Traitement du formulaire
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['password'] === $_POST['confirmPassword']) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     checkCsrfToken();
-    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $user['password'];
 
+    if ($_POST['password'] === $_POST['confirmPassword']) {
+        if (empty($_POST['password'])) {
+            redirectWithError('Password cannot be empty.', 'change_password.php');
+        }
 
-//Mise à jour de l'user sur la bdd
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    //Mise à jour de l'user sur la bdd
     $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
     if ($stmt->execute([$password, $id])) {
         redirectWithSuccess('Your password has been changed', 'dashboard.php');
     } else {
         redirectWithError('Error changing password', '../index.php');
     }
+    } else {
+        redirectWithError('Passwords do not match', 'change_password.php');
+    }
 }
 ?>
 
     <div id="main-part">
         <h2>Change my password</h2>
+        <?= displayErrorOrSuccessMessage() ?>
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
 
