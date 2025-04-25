@@ -1,4 +1,4 @@
-# 🍫 Cks – Gestion de stock pour caisse café au travail
+# 🍫 Cks – Gestion d'utilisateurs et de stock pour caisse café au travail
 
 Cks est une application web PHP permettant de gérer un stock de produits, des utilisateurs et leurs commandes. Développée pour un environnement professionnel, elle propose une interface complète d'administration et une expérience utilisateur simplifiée.
 
