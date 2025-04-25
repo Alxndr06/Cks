@@ -20,33 +20,32 @@ if (!$user) {
 }
 
 // Traitement du formulaire
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['password'] === $_POST['confirmPassword']) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && ($_POST['email'] === $_POST['confirmEmail'])) {
     checkCsrfToken();
-    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $user['password'];
-
+    $email = !empty($_POST['email']) ? ($_POST['email']) : $user['email'];
 
 //Mise à jour de l'user sur la bdd
-    $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-    if ($stmt->execute([$password, $id])) {
-        redirectWithSuccess('Your password has been changed', 'dashboard.php');
+    $stmt = $pdo->prepare("UPDATE users SET email = ? WHERE id = ?");
+    if ($stmt->execute([$email, $id])) {
+        redirectWithSuccess('Your email has been changed', 'dashboard.php');
     } else {
-        redirectWithError('Error changing password', '../index.php');
+        redirectWithError('Error changing email', '../index.php');
     }
 }
 ?>
 
     <div id="main-part">
-        <h2>Change my password</h2>
+        <h2>Change my email</h2>
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
 
-            <label for="password">New password :</label>
-            <input type="password" id="password" name="password" ><br><br>
+            <label for="email">New email :</label>
+            <input type="email" id="email" name="email" ><br><br>
 
-            <label for="confirmPassword">Confirm password :</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" ><br><br>
+            <label for="confirmPassword">Confirm email :</label>
+            <input type="email" id="confirmEmail" name="confirmEmail" ><br><br>
 
-            <button type="submit">Change password</button><br><br>
+            <button type="submit">Change email</button><br><br>
         </form>
         <?= backupLink("dashboard.php?id=$id", '🔙back to dashboard'); ?>
     </div>
