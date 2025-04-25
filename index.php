@@ -20,7 +20,7 @@ $news = $stmt->fetchAll();
        <?php endif; ?>
 
        <p><?= nl2br(substr(htmlspecialchars($article['content']), 0, 250)) ?>...</p>
-       <a title="Read the article" class="news_readmore" href="news/view.php?id=<?= $article['id'] ?>">Read more</a>
+       <a title="Read the article" class="news_readmore" href="news/view_article.php?id=<?= $article['id'] ?>">Read more</a>
        <p><em>Par <?= htmlspecialchars($article['author']) ?>, le <?= date('d/m/Y à H:i', strtotime($article['created_at'])) ?></em></p>
    </div>
 

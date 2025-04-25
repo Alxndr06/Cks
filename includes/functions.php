@@ -249,7 +249,7 @@ function newsAdminActions($article) : string
             <button type="submit" title="Edit article">✏️</button>
         </form>
         |
-        <form action="../../news/view.php" method="GET" style="display:inline;">
+        <form action="../../news/view_article.php" method="GET" style="display:inline;">
             <input type="hidden" name="csrf_token" value="%s">
             <input type="hidden" name="id" value="%s">
             <button type="submit" title="View article">🔎</button>
