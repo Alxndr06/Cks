@@ -21,6 +21,9 @@ $products = $stmt->fetchAll();
     <?= displayLockedStatus(); ?>
 
     <form method="POST" action="order/process_order.php">
+
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+
         <div id="live-summary">
             <p>🧾 Total items selected: <span id="total-items">0</span></p>
             <p>💶 Estimated total: <span id="total-price">0.00</span> €</p>
@@ -37,7 +40,6 @@ $products = $stmt->fetchAll();
                     <p class="desc"><?= htmlspecialchars($product['description']) ?></p>
 
                     <?php if ($isLoggedIn && !$isLocked): ?>
-                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
                         <?php if ($product['stock_quantity'] == 0): ?>
                             <p class="out-of-stock">❌ Out of stock</p>
                         <?php else: ?>
