@@ -63,7 +63,7 @@ $products = $stmt->fetchAll();
 
         <?php if ($isLoggedIn && !$isLocked): ?>
             <div id="order-summary">
-                <button class="shop_submit_button" type="submit" onclick="return confirm('Confirm order ?')">✅ Order</button>
+                <button class="shop_submit_button" type="submit" onclick="return confirmOrder()">✅ Order</button>
                 <button class="shop_clear_button" type="reset">❌ Clear</button>
             </div>
         <?php endif; ?>

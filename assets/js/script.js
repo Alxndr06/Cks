@@ -42,3 +42,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateAll(); // initial update
 });
+
+// Confirmation lors de l'achat et listing des produits séléctionnés
+function confirmOrder() {
+    const selectedProducts = [];
+    const inputs = document.querySelectorAll('.shop_quantity_input');
+
+    inputs.forEach(input => {
+        const quantity = parseInt(input.value);
+        if (quantity > 0) {
+            const label = input.parentElement.querySelector('h3').innerText;
+            selectedProducts.push(`${label} × ${quantity}`);
+        }
+    });
+
+    if (selectedProducts.length === 0) {
+        alert('⚠️ You must select at least one product.');
+        return false; // Empêche l'envoi du formulaire
+    }
+
+    const summary = selectedProducts.join('\n');
+    return confirm(`🛒 Confirm your order:\n\n${summary}`);
+}
