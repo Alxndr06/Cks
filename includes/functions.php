@@ -267,6 +267,36 @@ function newsAdminActions($article) : string
     );
 }
 
+function eventAdminActions($event) : string {
+    $eventId = htmlspecialchars($event['id']);
+    $csrfToken = getCsrfToken();
+
+    return sprintf('
+    <td>
+        <form action="edit_event.php" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="%s">
+            <button type="submit" title="Edit event">✏️</button>
+        </form>
+        |
+        <form action="../../events/view_event.php" method="GET" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="%s">
+            <input type="hidden" name="id" value="%s">
+            <button type="submit" title="View event">🔎</button>
+        </form>
+        |
+        <form action="delete_event.php" method="POST" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="%s">
+            <input type="hidden" name="id" value="%s">
+            <button type="submit" title="Delete event" onclick="return confirm(\'Are you sure you want to delete this event?\')">🗑️</button>
+        </form>
+    </td>
+    ',
+        $eventId,
+        $csrfToken, $eventId,
+        $csrfToken, $eventId
+    );
+}
+
 function logAction($pdo, $admin_id, $target_id, $action, $description) {
     $ip = $_SERVER['REMOTE_ADDR'];
 

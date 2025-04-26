@@ -63,3 +63,5 @@ $orders = $stmt->fetchAll();
         <?php endforeach; ?>
     </table>
 </div>
+
+<?php require __DIR__ . '/../../includes/footer.php'; ?>
