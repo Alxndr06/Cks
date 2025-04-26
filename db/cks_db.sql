@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : lun. 21 avr. 2025 à 22:59
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Hôte : localhost
+-- Généré le : sam. 26 avr. 2025 à 20:00
+-- Version du serveur : 10.11.11-MariaDB-deb12
+-- Version de PHP : 8.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `cks_db`
+-- Base de données : `aulon1930571_2z3m`
 --
 
 -- --------------------------------------------------------
@@ -95,12 +95,12 @@ CREATE TABLE `products` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `lastname` text NOT NULL,
-  `firstname` text NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `note` decimal(10,0) DEFAULT 0,
-  `total_spent` decimal(10,0) NOT NULL DEFAULT 0,
+  `email` varchar(255) NOT NULL,
+  `note` decimal(10,2) DEFAULT 0.00,
+  `total_spent` decimal(10,2) NOT NULL DEFAULT 0.00,
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `locked` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
