@@ -8,9 +8,10 @@ $csrf_token = getCsrfToken();
 //LOGIQUE ajout d'utilisateur
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     checkCsrfToken();
-    $username = preg_replace('/\s+/', '', sanitize($_POST['username']));
-    $lastname = sanitize($_POST['lastname']);
-    $firstname = sanitize($_POST['firstname']);
+    $username = preg_replace('/\s+/', '', trim($_POST['username']));
+    $lastname = trim($_POST['lastname']);
+    $firstname = trim($_POST['firstname']);
+
     $email = strtolower(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
