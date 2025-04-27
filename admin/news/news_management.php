@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../config/db_connect.php';
 checkAdmin();
 
-$stmt = $pdo->prepare("SELECT * FROM news");
+$stmt = $pdo->prepare("SELECT * FROM news ORDER BY created_at DESC");
 $stmt->execute();
 $news= $stmt->fetchAll();
 
