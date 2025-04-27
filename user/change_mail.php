@@ -25,10 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($_POST['email'] === $_POST['confirmEmail']) {
 
-        $email = !empty($_POST['email']) ? ($_POST['email']) : $user['email'];
+        $email = strtolower(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             redirectWithError('Invalid email address.', 'change_email.php');
         }
+
 
         // Vérification de l'unicité du mail
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
