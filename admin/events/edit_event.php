@@ -15,6 +15,10 @@ $stmt = $pdo->prepare("SELECT * FROM events WHERE id = ?");
 $stmt->execute([$id]);
 $event = $stmt->fetch();
 
+if (!$event) {
+    redirectWithError('Unknown event', 'event_manager.php');
+}
+
 ?>
 
 <div id="main-part">
