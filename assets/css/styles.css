@@ -385,9 +385,6 @@ button img {
     cursor: pointer;
 }
 
-.add_user_button {
-}
-
 .news {
     margin-bottom: 30px;
     padding-bottom: 20px;
@@ -510,6 +507,56 @@ button img {
     flex-wrap: wrap;
 }
 
+.view_event {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.view_event {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.view_event p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 1em;
+    color: #333;
+}
+
+.view_event strong {
+    color: #555;
+    font-weight: bold;
+    display: inline-block;
+    width: 120px; /* largeur fixe pour aligner les textes */
+}
+
+.view_event br {
+    margin-top: 5px;
+}
+
+.backupLink {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.backupLink:hover {
+    background-color: black;
+    color: white;
+}
+
 /* Admin actions: responsive visibility */
 .desktop-action {
     display: inline;
@@ -537,6 +584,23 @@ button img {
     background-color: #333;
 }
 
+.add_user_button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: gray;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    align-self: center;
+}
+
+.add_user_button:hover {
+    background-color: white;
+    color: black;
+
+}
+
 @media screen and (max-width: 768px) {
     #main-part {
         width: 95%;
@@ -559,7 +623,7 @@ button img {
         border-radius: 20px;
         padding: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin: 0; /* ❗️supprime l'ancien margin */
+        margin: 0;
 
         display: flex;
         flex-direction: column;
@@ -657,6 +721,41 @@ button img {
 
     .mobile-action {
         display: inline;
+    }
+
+    .view_event {
+        padding: 15px;
+    }
+
+    .view_event strong {
+        width: 100%; /* les titres passent en haut */
+        margin-bottom: 5px;
+    }
+
+    .view_event p {
+        font-size: 0.95em;
+    }
+
+    .backupLink {
+        padding: 5px 10px;
+        font-size: 1em;
+    }
+
+    .add_user_button {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: gray;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        align-self: center;
+    }
+
+    .add_user_button:hover {
+        background-color: white;
+        color: black;
+
     }
 
 }

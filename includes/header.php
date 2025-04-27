@@ -46,6 +46,7 @@ $script_version = filemtime(__DIR__ . '/../assets/js/script.js');
         <li><a title="Home" href="<?= $base_url ?>index.php">Home</a></li>
         <li><a title="Snack shop" href="<?= $base_url ?>snack_shop.php">Buy a snack</a></li>
         <li><a title="User dashboard" href="<?= $base_url ?>user/dashboard.php">Dashboard</a> </li>
+        <li><a title="Events" href="<?= $base_url ?>events/event_list.php">Events</a> </li>
         <?php if ($isLoggedIn && $isAdmin): ?>
         <li><a title="Admin dashboard" id="admin_button" href="<?= $base_url ?>admin/admin_dashboard.php">Admin</a> </li>
         <?php endif; ?>

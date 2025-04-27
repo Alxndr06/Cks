@@ -9,7 +9,7 @@ $csrf_token = getCsrfToken();
 
 <div id="main-part">
     <h2>Add an article</h2>
-    <form action="process_add.php" method="post" enctype="multipart/form-data">
+    <form action="process_add_news.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
 
         <label for="title">Titre :</label><br>

@@ -12,14 +12,14 @@ $events = $stmt->fetchAll();
 
 <div id="main-part">
     <h2>Event management</h2>
-
+    <?= displayErrorOrSuccessMessage() ?>
+    <a title="Create a new event" href="add_event.php" class="add_user_button">➕Create new event</a>
 <table class="user-table">
 <tr>
     <th>ID</th>
     <th>Date</th>
     <th>Title</th>
     <th>Description</th>
-    <th>Participants</th>
     <th>Actions</th>
 </tr>
     <?php foreach ($events as $event) : ?>
@@ -27,13 +27,12 @@ $events = $stmt->fetchAll();
             <td><?= $event['id'] ?></td>
             <td><?= date("d/m/Y H:i", strtotime($event['date'])) ?></td>
             <td><?= htmlspecialchars($event['title']) ?></td>
-            <td><?= htmlspecialchars($event['description']) ?></td>
+            <td><?= nl2br(substr(htmlspecialchars($event['description']), 0, 50)) ?>...</td>
             <?php
-            $participants = json_decode($event['participants']);
+            $participants = (!empty($event['participants'])) ? json_decode($event['participants']) : [];
             $participantCount = (is_array($participants)) ? count($participants) : 0;
             ?>
-            <td><?= $participantCount ?> participants</td>
-            <?= eventAdminActions($event) ?>
+            <?= adminActions($event, 'event') ?>
         </tr>
     <?php endforeach; ?>
 </table>

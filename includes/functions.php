@@ -159,6 +159,21 @@ function restrictedAdminActions($user) : string {
     );
 }
 
+// actions sur les events par les users
+function userEventActions($event) : string {
+    $eventID = (int) $event['id'];
+
+    return sprintf('
+            <td>
+            <form action="view_event.php" method="GET" style="display:inline;">
+                <input type="hidden" name="id" value="%s">
+                <button type="submit" title="view event">🔎</button>
+            </form>
+            </td>
+    ',
+    $eventID);
+}
+
 // fonction de barre de gestion des users
 function advancedAdminActions($user) : string {
     $userId = htmlspecialchars($user['id']);
@@ -278,22 +293,63 @@ function eventAdminActions($event) : string {
             <button type="submit" title="Edit event">✏️</button>
         </form>
         |
-        <form action="../../events/view_event.php" method="GET" style="display:inline;">
-            <input type="hidden" name="csrf_token" value="%s">
+        <form action="event_details.php" method="GET" style="display:inline;">
             <input type="hidden" name="id" value="%s">
             <button type="submit" title="View event">🔎</button>
         </form>
         |
-        <form action="delete_event.php" method="POST" style="display:inline;">
-            <input type="hidden" name="csrf_token" value="%s">
+        <form method="POST" action="process_event.php" style="display:inline;">
+            <input type="hidden" name="action" value="delete">
             <input type="hidden" name="id" value="%s">
-            <button type="submit" title="Delete event" onclick="return confirm(\'Are you sure you want to delete this event?\')">🗑️</button>
+            <input type="hidden" name="csrf_token" value="%s">
+            <button type="submit" onclick="return confirm(\'Are you sure?\')">🗑️</button>
         </form>
-    </td>
-    ',
+    </td>',
         $eventId,
-        $csrfToken, $eventId,
-        $csrfToken, $eventId
+        $eventId,
+        $eventId,
+        $csrfToken
+    );
+}
+
+// Formulaire polyvalent (comme tutu)
+function adminActions(array $item, string $type) : string {
+    $itemId = htmlspecialchars($item['id']);
+    $csrfToken = htmlspecialchars(getCsrfToken());
+
+    $editPage = "edit_" . $type . ".php";
+    $detailsPage = $type . "_details.php";
+    $processPage = "process_" . $type . ".php";
+
+    return sprintf('
+    <td>
+        <form action="%s" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="%s">
+            <button type="submit" title="Edit %s">✏️</button>
+        </form>
+        |
+        <form action="%s" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="%s">
+            <button type="submit" title="View %s">🔎</button>
+        </form>
+        |
+        <form method="POST" action="%s" style="display:inline;">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="id" value="%s">
+            <input type="hidden" name="csrf_token" value="%s">
+            <button type="submit" title="Delete %s" onclick="return confirm(\'Are you sure ?\')">🗑️</button>
+        </form>
+    </td>',
+        htmlspecialchars($editPage),
+        $itemId,
+        ucfirst($type),
+        htmlspecialchars($detailsPage),
+        $itemId,
+        ucfirst($type),
+        htmlspecialchars($processPage),
+        $itemId,
+        $csrfToken,
+        ucfirst($type)
     );
 }
 

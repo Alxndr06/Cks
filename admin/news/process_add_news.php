@@ -10,20 +10,14 @@ $content = $_POST['content'];
 $author = $_SESSION['username'];
 
 if(empty($title) || empty($content)){
-    $_SESSION['error'] = 'Title and/or content are missing';
-    header('Location: news_management.php');
-    exit;
+    redirectWithError('Title and/or content are missing', 'news_management.php');
 }
 
 $stmt = $pdo->prepare("INSERT INTO news (title, content, author) VALUES (?, ?, ?)");
 if($stmt->execute([$title, $content, $author])) {
     logAction($pdo, $_SESSION['id'], null, 'add_article', 'Title: ' . $title);
-    $_SESSION['success'] = 'News added';
-    header('Location: ../../index.php');
-    exit;
+    redirectWithSuccess('News has been added', 'news_management.php');
 } else {
-    $_SESSION['error'] = 'News not added';
-    header('Location: news_management.php');
-    exit;
+    redirectWithError('An error occured while adding news', 'news_management.php');
 }
 
