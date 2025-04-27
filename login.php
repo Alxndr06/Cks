@@ -2,6 +2,8 @@
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/config/db_connect.php';
 
+// Récupération du Token CSRF
+$csrf_token = getCsrfToken();
 
 //On s'assure que l'user ne soit pas déjà log
 if (isset($_SESSION['id'])) {
@@ -9,16 +11,12 @@ if (isset($_SESSION['id'])) {
     exit;
 }
 
-// Récupération du Token CSRF
-$csrf_token = getCsrfToken();
-
 // Traitement du formulaire (On s'assure de la méthode post)
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
-
     checkCsrfToken();
 
     //Récupération de manière sécurisée pour éviter toute injection d'html du seigneur dans mes variables (nettoyage)
-    $username = trim(htmlspecialchars($_POST["username"]));
+    $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
 
     // On prépare notre requête SQL
@@ -29,9 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     // Vérification du mot de passe
     if ($user && password_verify($password, $user['password'])) {
         if (!$user['is_active']) {
-            $_SESSION['error'] = 'Your account is not activated yet. Check your email to activate your account.';
-            header('Location: login.php');
-            exit;
+            redirectWithError('Your account is not activated yet. Check your email to activate your account.', 'login.php');
         }
         // Génére un nouvel ID pour éviter le session fixation
         session_regenerate_id(true);
@@ -53,9 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         header("Location: user/dashboard.php");
         exit();
     } else {
-        $_SESSION['error'] = 'Username or password is incorrect.';
-        header('Location: login.php');
-        exit;
+        redirectWithError('Username or password is incorrect.', 'login.php');
     }
 }
 
