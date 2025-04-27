@@ -22,16 +22,21 @@ if (!$user) {
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     checkCsrfToken();
-    $username = $_POST['username'];
-    $lastName = $_POST['lastname'];
-    $firstName = $_POST['firstname'];
-    $email = $_POST['email'];
+    $username = preg_replace('/\s+/', '', trim($_POST['username']));
+    $lastname = trim($_POST['lastname']);
+    $firstname = trim($_POST['firstname']);
+    $email = strtolower(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $user['password'];
     $role = $_POST['role'];
 
+    $allowed_roles = ['user', 'admin'];
+    if (!in_array($role, $allowed_roles)) {
+        redirectWithError("Invalid role selected.", "edit_user.php");
+    }
+
 //Mise à jour de l'user sur la bdd
     $stmt = $pdo->prepare("UPDATE users SET username = ?, lastname = ?, firstname = ?, email = ?, password = ?, role = ? WHERE id = ?");
-    if ($stmt->execute([$username, $lastName, $firstName, $email, $password, $role, $id])) {
+    if ($stmt->execute([$username, $lastname, $firstname, $email, $password, $role, $id])) {
         logAction($pdo, $_SESSION['id'], $user['id'], 'edit_user', "New values: ID: " . $user['id']);
         redirectWithSuccess('User has been updated', 'user_list.php');
     } else {

@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = preg_replace('/\s+/', '', trim($_POST['username']));
     $lastname = trim($_POST['lastname']);
     $firstname = trim($_POST['firstname']);
-
     $email = strtolower(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
