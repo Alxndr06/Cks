@@ -10,7 +10,7 @@ $products = $stmt->fetchAll();
     <div id="main-part">
         <h2>Stock management</h2>
         <?= displayErrorOrSuccessMessage(); ?>
-        <a title="Add new product" href="add_product.php">➕Add new product</a>
+        <a title="Add new product" href="add_product.php" class="interface-button">➕Add new product</a>
         <table class="user-table">
             <tr>
                 <th class="col-id">ID</th>

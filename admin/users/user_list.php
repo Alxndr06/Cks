@@ -10,27 +10,27 @@ $users = $stmt->fetchAll();
 <div id="main-part">
     <h2>User list</h2>
     <?= displayErrorOrSuccessMessage(); ?>
-    <a title="Create a new user" href="add_user.php" class="add_user_button">➕Create new user</a>
+    <a title="Create a new user" href="add_user.php" class="interface-button">➕Create new user</a>
     <table class="user-table">
         <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Note</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Total spent</th>
-            <th>Account status</th>
+            <th class="col-id">ID</th>
+            <th class="col-username">Username</th>
+            <th class="col-note"h>Note</th>
+            <th class="col-role">Role</th>
+            <th class="col-locked">Status</th>
+            <th class="col-total-spent">Total spent</th>
+            <th class="col-acc-status">Account status</th>
             <th>Quick actions</th>
         </tr>
         <?php foreach ($users as $user): ?>
             <tr>
-                <td><?= $user['id'] ?></td>
-                <td><?= htmlspecialchars(ucfirst(strtolower($user['username']))) ?></td>
-                <td><?= colorDebt($user['note']) ?> €</td>
-                <td><?= htmlspecialchars(ucfirst(strtolower($user['role']))) ?></td>
-                <td><?php if (!$user['locked']): ?>Unlocked<?php else: ?>Locked<?php endif; ?></td>
-                <td><?= $user['total_spent'] ?> €</td>
-                <td><?= displayActiveStatus($user['is_active']) ?></td>
+                <td class="col-id"><?= $user['id'] ?></td>
+                <td class="col-username"><?= htmlspecialchars(ucfirst(strtolower($user['username']))) ?></td>
+                <td class="col-note"><?= colorDebt($user['note']) ?> €</td>
+                <td class="col-role"><?= htmlspecialchars(ucfirst(strtolower($user['role']))) ?></td>
+                <td class="col-locked"><?php if (!$user['locked']): ?>Unlocked<?php else: ?>Locked<?php endif; ?></td>
+                <td class="col-total-spent"><?= $user['total_spent'] ?> €</td>
+                <td class="col-acc-status"><?= displayActiveStatus($user['is_active']) ?></td>
                 <?= restrictedAdminActions($user) ?>
             </tr>
         <?php endforeach; ?>

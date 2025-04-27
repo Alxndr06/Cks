@@ -543,13 +543,11 @@ button img {
 }
 
 .backupLink {
-    display: inline-block;
-    margin-top: 20px;
-    text-decoration: none;
-    padding: 8px 16px;
-    background-color: gray;
-    color: white;
+    padding: 5px;
     border-radius: 5px;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
 }
 
 .backupLink:hover {
@@ -584,21 +582,37 @@ button img {
     background-color: #333;
 }
 
-.add_user_button {
+.interface-button {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: gray;
+    background-color: #3498db;
+    border: none;
     color: white;
-    border-radius: 8px;
-    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
     align-self: end;
 }
 
-.add_user_button:hover {
+.interface-button:hover {
+    background-color: #2980b9;
+}
+
+.backup-button {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+    align-self: center;
+}
+
+.backup-button:hover {
     background-color: white;
     color: black;
-
 }
 
 @media screen and (max-width: 768px) {
@@ -711,7 +725,10 @@ button img {
     /* Snack shop */
     .col-id,
     .col-desc,
-    .col-access {
+    .col-access,
+    .col-total-spent,
+    .col-acc-status
+    {
         display: none;
     }
 
@@ -736,26 +753,22 @@ button img {
         font-size: 0.95em;
     }
 
-    .backupLink {
-        padding: 5px 10px;
-        font-size: 1em;
-    }
-
-    .add_user_button {
+    .interface-button {
         display: inline-block;
-        padding: 5px 10px;
-        background-color: gray;
+        background-color: #3498db;
+        border: none;
         color: white;
-        border-radius: 8px;
-        text-decoration: none;
+        padding: 5px 9px;
+        border-radius: 4px;
+        cursor: pointer;
         transition: background-color 0.3s ease;
+        text-decoration: none;
         align-self: center;
     }
 
-    .add_user_button:hover {
-        background-color: white;
-        color: black;
-
+    .interface-button:hover {
+        background-color: #2980b9;
     }
+
 
 }

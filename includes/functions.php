@@ -126,7 +126,7 @@ function backupLink(string $default, string $label): string {
         }
     }
 
-    return sprintf('<a href="%s" class="backupLink">%s</a>', htmlspecialchars($backupUrl, ENT_QUOTES, 'UTF-8'), htmlspecialchars($label, ENT_QUOTES, 'UTF-8'));
+    return sprintf('<a href="%s" class="backup-button">%s</a>', htmlspecialchars($backupUrl, ENT_QUOTES, 'UTF-8'), htmlspecialchars($label, ENT_QUOTES, 'UTF-8'));
 }
 
 function restrictedAdminActions($user) : string {

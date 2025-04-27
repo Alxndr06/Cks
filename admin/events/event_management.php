@@ -13,7 +13,7 @@ $events = $stmt->fetchAll();
 <div id="main-part">
     <h2>Event management</h2>
     <?= displayErrorOrSuccessMessage() ?>
-    <a title="Create a new event" href="add_event.php" class="add_user_button">➕Create new event</a>
+    <a title="Create a new event" href="add_event.php" class="interface-button">➕Create new event</a>
 <table class="user-table">
 <tr>
     <th>ID</th>
