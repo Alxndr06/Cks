@@ -14,9 +14,9 @@ $action = $_POST['action'];
 
 switch ($action) {
     case 'add':
-        $title = htmlspecialchars($_POST['title']);
-        $content = htmlspecialchars($_POST['content']);
-        $author = $_SESSION['username'];
+        $title = trim($_POST['title']);
+        $content = trim($_POST['content']);
+        $author = trim($_SESSION['username']);
 
         if(empty($title) || empty($content)){
             redirectWithError('Title and/or content are missing', 'news_management.php');
@@ -37,13 +37,15 @@ switch ($action) {
 
         $id = (int) $_POST['id'];
 
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+        $title = trim($_POST['title']);
+        $content = trim($_POST['content']);
 
         $stmt = $pdo->prepare("UPDATE news SET title = ?, content = ? WHERE id = ?");
         if($stmt->execute([$title, $content, $id])) {
             logAction($pdo, $_SESSION['id'], null, 'edit_article', 'Title: ' . $title);
             redirectWithSuccess('Article has been updated', 'news_management.php');
+        } else {
+            redirectWithError('An error occured while updating article', 'news_management.php');
         }
         break;
     case 'delete':
@@ -52,7 +54,7 @@ switch ($action) {
         }
 
         $id = (int) $_POST['id'];
-        $title = $_POST['title'];
+        $title = trim($_POST['title']);
 
         $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
         if($stmt->execute([$id])) {
