@@ -11,7 +11,7 @@ $news= $stmt->fetchAll();
 <div id="main-part">
     <h2>News manager</h2>
     <?php echo displayErrorOrSuccessMessage() ?>
-    <a title="Write a new article" href="add_article.php" class="add_user_button">➕Write a new article</a>
+    <a title="Write a new article" href="add_article.php" class="add_user_button">➕Write Article</a>
     <table class="user-table">
     <tr>
         <th>Date</th>
@@ -24,7 +24,7 @@ $news= $stmt->fetchAll();
         <td><?= htmlspecialchars($article['created_at']); ?></td>
         <td><?= htmlspecialchars($article['title']) ?> </td>
         <td><?= htmlspecialchars($article['author']) ?></td>
-        <?= newsAdminActions($article) ?>
+        <?= adminActions($article, 'article') ?>
     </tr>
     <?php endforeach; ?>
     </table>
