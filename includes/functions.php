@@ -315,7 +315,7 @@ function eventAdminActions($event) : string {
 // Formulaire polyvalent (comme tutu)
 function adminActions(array $item, string $type) : string {
     $itemId = htmlspecialchars($item['id']);
-    $csrfToken = htmlspecialchars(getCsrfToken());
+    $csrfToken = getCsrfToken();
 
     $editPage = "edit_" . $type . ".php";
     $detailsPage = $type . "_details.php";

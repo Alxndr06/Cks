@@ -9,16 +9,17 @@ $csrf_token = getCsrfToken();
 
 <div id="main-part">
     <h2>Add an article</h2>
-    <form action="process_add_news.php" method="post" enctype="multipart/form-data">
+    <form action="process_article.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="add">
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
 
-        <label for="title">Titre :</label><br>
+        <label for="title">Title :</label><br>
         <input type="text" id="title" name="title" required><br><br>
 
-        <label for="content">Contenu :</label><br>
+        <label for="content">Content :</label><br>
         <textarea id="content" name="content" rows="10" required></textarea><br><br>
 
-        <button type="submit">Publier</button>
+        <button type="submit">Publish article</button>
     </form>
 
 </div>

@@ -592,7 +592,7 @@ button img {
     border-radius: 8px;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    align-self: center;
+    align-self: end;
 }
 
 .add_user_button:hover {
