@@ -32,7 +32,7 @@ $users = $stmt->fetchAll();
                 <td class="col-locked"><?php if (!$user['locked']): ?>Unlocked<?php else: ?>Locked<?php endif; ?></td>
                 <td class="col-total-spent"><?= $user['total_spent'] ?> €</td>
                 <td class="col-acc-status"><?= displayActiveStatus($user['is_active']) ?></td>
-                <?= restrictedAdminActions($user) ?>
+                <?= simpleUserActions($user, 'user') ?>
             </tr>
         <?php endforeach; ?>
     </table>

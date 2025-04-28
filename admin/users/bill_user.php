@@ -8,12 +8,14 @@ $csrf_token = getCsrfToken();
 if (!isset($_GET['id'])) {
     redirectWithError('Unknown user ID', 'user_list.php');
 }
+
 $id = (int)$_GET['id'];
 
 // Récupère l'user'
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$id]);
 $user = $stmt->fetch();
+
 if (!$user) {
     redirectWithError('User not found', 'user_list.php');
 }
@@ -23,85 +25,18 @@ $stmt = $pdo->prepare("SELECT * FROM products");
 $stmt->execute();
 $products = $stmt->fetchAll();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    checkCsrfToken();
-
-    $manualAmount = isset($_POST['billAmount']) ? (float)$_POST['billAmount'] : 0;
-    $reason = sanitize($_POST['reason'] ?? '');
-    $quantities = $_POST['quantities'] ?? [];
-
-    if (!is_array($quantities)) {
-        redirectWithError('Invalid form data', 'user_list.php');
-    }
-
-    $filteredQuantities = [];
-    foreach ($quantities as $productId => $qty) {
-        $qty = (int)$qty;
-        if ($qty > 0) {
-            $filteredQuantities[(int)$productId] = $qty;
-        }
-    }
-
-    $totalProductAmount = 0;
-    $productDetails = [];
-    $purchaseList = [];
-
-    foreach ($filteredQuantities as $productId => $qty) {
-        $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
-        $stmt->execute([$productId]);
-        $product = $stmt->fetch();
-
-        if (!$product) {
-            redirectWithError("Unknown product ID: $productId", 'user_list.php');
-        }
-
-        if ($qty > $product['stock_quantity']) {
-            redirectWithError("Not enough stock for product: " . htmlspecialchars($product['name']), 'user_list.php');
-        }
-
-        $lineTotal = $qty * $product['price'];
-        $totalProductAmount += $lineTotal;
-
-        $purchaseList[$productId] = $qty;
-        $productDetails[] = "{$product['name']} x{$qty} ({$lineTotal} €)";
-    }
-
-    $finalAmount = $manualAmount + $totalProductAmount;
-
-    if ($manualAmount == 0 && $finalAmount == 0) {
-        redirectWithError("You must bill something greater or lower than 0.", 'user_list.php');
-    }
-
-    // Gestion du stock
-    foreach ($purchaseList as $productId => $qty) {
-        $stmt = $pdo->prepare("UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ?");
-        $stmt->execute([$qty, $productId]);
-    }
-
-    // Mise à jour de la note et total_spent
-    $stmt = $pdo->prepare("UPDATE users SET note = note + ?, total_spent = total_spent + ? WHERE id = ?");
-    $stmt->execute([$finalAmount, $finalAmount, $id]);
-
-    // Insertion dans orders
-    $items_json = json_encode($purchaseList);
-    $stmt = $pdo->prepare("INSERT INTO orders (user_id, datetime, items, total_price) VALUES (?, NOW(), ?, ?)");
-    $stmt->execute([$id, $items_json, $finalAmount]);
-
-    // On log
-    $logMessage = "Total: {$finalAmount} €";
-    if ($manualAmount > 0) $logMessage .= " | Manual: {$manualAmount} €";
-    if (!empty($productDetails)) $logMessage .= " | Products: " . implode(', ', $productDetails);
-    if (!empty($reason)) $logMessage .= " | Reason: $reason";
-
-    logAction($pdo, $_SESSION['id'], $user['id'], 'bill_user', $logMessage);
-
-    redirectWithSuccess('User has been billed and order recorded', 'user_list.php');
+if (!$products) {
+    redirectWithError('Products not found', 'user_list.php');
 }
+
 ?>
 
 <div id="main-part">
     <h2>Bill <?= ucfirst(strtolower($user['username'])) ?></h2>
-    <form method="POST">
+    <?= displayErrorOrSuccessMessage() ?>
+    <form method="POST" action="process_user.php">
+        <input type="hidden" name="action" value="bill">
+        <input type="hidden" name="id" value="<?= $id ?>">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
 
         <h3>Manual billing</h3>

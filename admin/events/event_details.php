@@ -25,7 +25,6 @@ if (!$event) {
 
 <div id="main-part">
     <h2>View event</h2>
-    <div class="view_event">
         <table class="user-table-vertical">
             <tr>
                 <th>ID</th>
@@ -56,8 +55,9 @@ if (!$event) {
                 <td><?= displayActiveStatus($event['is_active']) ?></td>
             </tr>
         </table>
-        <?= adminActions($event, 'event') ?>
-    </div>
+        <div class="OEB">
+            <?= adminActions($event, 'event') ?>
+        </div>
     <div class="backupLinkContainer">
     <?= backupLink('event_management.php'); ?>
     </div>

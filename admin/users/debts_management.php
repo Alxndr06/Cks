@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../includes/header.php';
 checkAdmin();
 ?>
 
-
     <div id="main-part">
         <h2>Debts management</h2>
         <div class="dashboard_container">

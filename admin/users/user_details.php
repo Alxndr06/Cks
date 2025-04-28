@@ -73,7 +73,9 @@ if (!$user) {
             <td><?= displayActiveStatus($user['is_active']) ?></td>
         </tr>
     </table>
-    <?= AdvancedAdminActions($user) ?>
+    <div class="OEB">
+    <?= adminActions($user, 'user') ?>
+    </div>
     <br><br>
     <div class="backupLinkContainer">
         <?= backupLink("user_list.php"); ?>
