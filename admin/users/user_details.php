@@ -33,6 +33,10 @@ if (!$user) {
             <td><?= $user['id'] ?></td>
         </tr>
         <tr>
+            <th>USERNAME</th>
+            <td><?= htmlspecialchars(ucfirst(strtolower($user['username']))) ?></td>
+        </tr>
+        <tr>
             <th>LASTNAME</th>
             <td><?= htmlspecialchars(ucfirst(strtolower($user['lastname']))) ?></td>
         </tr>
