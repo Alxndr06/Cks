@@ -611,7 +611,7 @@ button img {
 }
 
 .backup-button:hover {
-    background-color: white;
+    background-color: lightgray;
     color: black;
 }
 
