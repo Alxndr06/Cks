@@ -121,14 +121,21 @@ switch ($action) {
             redirectWithError('User does not have any bill.', "bill_user.php?id=$id");
         }
 
-        // SOlde de la note
-    $stmt = $pdo->prepare("UPDATE users SET note = 0 WHERE id = ?");
-    if ($stmt->execute([$id])) {
-        logAction($pdo, $_SESSION['id'], $id, 'user_payment', htmlspecialchars($user['username']. " (ID :" . $id . ") settled his bill."));
-        redirectWithSuccess('Bill has been settled', 'user_list.php');
-    } else {
-        redirectWithError('Error when settling user bill', "bill_user.php?id=$id");
-    }
+        // Mise à jour de la note
+        $stmt = $pdo->prepare("UPDATE users SET note = 0 WHERE id = ?");
+        if (!$stmt->execute([$id])) {
+            redirectWithError('Error when settling user bill', "bill_user.php?id=$id");
+        }
+
+        logAction($pdo, $_SESSION['id'], $id, 'user_payment', htmlspecialchars($user['username'] . " (ID: $id) settled his bill. ($note €)"));
+
+        // Enregistre le paiement
+        if (!recordPayment($pdo, $id, $note, $_SESSION['id'])) {
+            redirectWithError('Payment could not be recorded.', "bill_user.php?id=$id");
+        }
+
+        // Tout s'est bien passé
+        redirectWithSuccess('Bill has been settled and payment recorded.', 'user_list.php');
         break;
     case 'bill':
         checkCsrfToken();

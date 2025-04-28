@@ -339,3 +339,12 @@ function redirectWithSuccess(string $message, string $location): void {
     header("Location: $location");
     exit;
 }
+
+function recordPayment($pdo, int $paymentAuthorId, float $amountPaid, int $adminId): bool {
+    $stmt = $pdo->prepare("INSERT INTO payments (payment_author_id, amount_paid, admin_id) VALUES (?, ?, ?)");
+    return $stmt->execute([
+        $paymentAuthorId,
+        $amountPaid,
+        $adminId
+    ]);
+}
