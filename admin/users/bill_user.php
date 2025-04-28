@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $finalAmount = $manualAmount + $totalProductAmount;
 
-    if ($finalAmount <= 0) {
-        redirectWithError("You must bill something greater than 0.", 'user_list.php');
+    if ($manualAmount == 0 && $finalAmount == 0) {
+        redirectWithError("You must bill something greater or lower than 0.", 'user_list.php');
     }
 
     // Gestion du stock
