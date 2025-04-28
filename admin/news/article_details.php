@@ -19,8 +19,6 @@ if (!$article) {
 
 <div id="main-part">
     <h2>Article details</h2>
-    <div id="main-part">
-        <h2>Read article</h2>
         <div class="news_read">
 
             <h1><?= htmlspecialchars($article['title']) ?></h1>
@@ -33,7 +31,6 @@ if (!$article) {
             <p><?= nl2br(htmlspecialchars($article['content'])) ?></p>
 
         </div>
-
 
     <?= backupLink('news_management.php', "🔙Back to news management"); ?>
 </div>
