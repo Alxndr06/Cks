@@ -23,12 +23,12 @@ $script_version = filemtime(__DIR__ . '/../assets/js/script.js');
 <body>
 <!--HEADER-->
 <header>
-    <h1>Cks App</h1>
     <button id="burger" aria-label="Toggle navigation" class="toggle_menu">
         <span></span>
         <span></span>
         <span></span>
     </button>
+    <h1>Cks App</h1>
     <?php if ($isLoggedIn): ?>
     <a id="disconnect_button" title="Disconnect" href="<?= $base_url ?>logout.php">Disconnect (<?php echo $userUsername ?>)</a>
     <?php else: ?>
