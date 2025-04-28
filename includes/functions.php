@@ -264,7 +264,7 @@ function simpleUserActions(array $item, string $type): string {
             <form method="GET" action="bill_user.php" style="display:inline;">
                 <input type="hidden" name="id" value="' . $itemId . '">
                 <input type="hidden" name="csrf_token" value="' . $csrfToken . '">
-                <button type="submit" title="Bill user">💲</button>
+                <button type="submit" title="Bill and payment">💲</button>
             </form>';
     }
 

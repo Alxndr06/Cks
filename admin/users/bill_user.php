@@ -34,6 +34,15 @@ if (!$products) {
 <div id="main-part">
     <h2>Bill <?= ucfirst(strtolower($user['username'])) ?></h2>
     <?= displayErrorOrSuccessMessage() ?>
+
+    <h3>Settle user debt after payment</h3>
+    <form method="POST" action="process_user.php" style="display:inline;">
+        <input type="hidden" name="action" value="settle">
+        <input type="hidden" name="id" value="<?= $id ?>">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+        <button type="submit" onclick="return confirm('Settle all debt for <?= ucfirst(strtolower($user['username'])) ?> ?')">✅ Settle debt (<?= $user['note'] ?>€)</button>
+    </form>
+
     <form method="POST" action="process_user.php">
         <input type="hidden" name="action" value="bill">
         <input type="hidden" name="id" value="<?= $id ?>">

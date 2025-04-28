@@ -102,6 +102,34 @@ switch ($action) {
             }
         }
         break;
+    case 'settle':
+        checkCsrfToken();
+
+        if (!isset($_POST['id'])) {
+            redirectWithError('Unknown user ID', 'user_list.php');
+        }
+
+        $id = (int) $_POST['id'];
+
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch();
+
+        $note = (double) $user['note'];
+
+        if ($note <=0) {
+            redirectWithError('User does not have any bill.', "bill_user.php?id=$id");
+        }
+
+        // SOlde de la note
+    $stmt = $pdo->prepare("UPDATE users SET note = 0 WHERE id = ?");
+    if ($stmt->execute([$id])) {
+        logAction($pdo, $_SESSION['id'], $id, 'user_payment', htmlspecialchars($user['username']. " (ID :" . $id . ") settled his bill."));
+        redirectWithSuccess('Bill has been settled', 'user_list.php');
+    } else {
+        redirectWithError('Error when settling user bill', "bill_user.php?id=$id");
+    }
+        break;
     case 'bill':
         checkCsrfToken();
 
@@ -175,7 +203,7 @@ switch ($action) {
 
         logAction($pdo, $_SESSION['id'], $id, 'bill_user', $logMessage);
 
-        redirectWithSuccess('User has been billed and log is recorded', 'user_list.php');
+        redirectWithSuccess('User has been billed and log has been recorded', 'user_list.php');
         break;
     case 'lock':
         checkCsrfToken();
@@ -221,7 +249,7 @@ switch ($action) {
     case 'delete':
         checkCsrfToken();
 
-// récupération de l'user
+        // récupération de l'user
         if (!isset($_POST['id'])) {
             redirectWithError("Unknown user ID", 'user_list.php');
         }
