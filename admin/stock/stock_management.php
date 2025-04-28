@@ -33,7 +33,9 @@ $products = $stmt->fetchAll();
                 </tr>
             <?php endforeach; ?>
         </table>
-        <?= backupLink('../admin_dashboard.php', '🔙back to admin dashboard'); ?>
+        <div class="backupLinkContainer">
+            <?= backupLink('../admin_dashboard.php'); ?>
+        </div>
     </div>
 
 <?php require '../../includes/footer.php'; ?>

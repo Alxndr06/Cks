@@ -113,7 +113,7 @@ function displayActiveStatus($isActive) : string {
 }
 
 // fonction de lien retour
-function backupLink(string $default, string $label): string {
+function backupLink(string $default, string $label = '🔙 Back'): string {
     $backupUrl = $default;
 
     // Vérifier si HTTP_REFERER est présent et appartient à notre domaine
@@ -137,8 +137,7 @@ function restrictedAdminActions($user) : string {
 
     return sprintf('
         <td>
-            <form action="user_details.php" method="POST" style="display:inline;">
-                <input type="hidden" name="csrf_token" value="%s">
+            <form action="user_details.php" method="GET" style="display:inline;">
                 <input type="hidden" name="id" value="%s">
                 <button type="submit">🔎</button>
             </form>
@@ -153,7 +152,7 @@ function restrictedAdminActions($user) : string {
                 <button type="submit">💲</button>
             </form>
         </td>',
-        $csrfToken, $userId,
+        $userId,
         $csrfToken, $userId, $lockIcon,
         $csrfToken, $userId
     );

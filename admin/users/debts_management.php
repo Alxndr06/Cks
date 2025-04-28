@@ -11,7 +11,9 @@ checkAdmin();
             <a class="dashboard_item" title="Bill all users" href="#">💵Bill all users</a>
             <a class="dashboard_item" title="Print invoice summary" href="#">🧾Print invoice summary</a>
         </div>
-        <?= backupLink('../admin_dashboard.php', '🔙back to admin dashboard'); ?>
+        <div class="backupLinkContainer">
+            <?= backupLink("../admin_dashboard.php"); ?>
+        </div>
     </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

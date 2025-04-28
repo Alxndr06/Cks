@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../includes/header.php';
 getCsrfToken();
 checkAdmin();
+
 //Récupération de la liste des utilisateurs
 $stmt = $pdo->query("SELECT id, username, email, note, total_spent, role, locked, is_active FROM users");
 $users = $stmt->fetchAll();
@@ -35,7 +36,9 @@ $users = $stmt->fetchAll();
             </tr>
         <?php endforeach; ?>
     </table>
-    <?= backupLink('user_management.php', '🔙back to user management'); ?>
+    <div class="backupLinkContainer">
+        <?= backupLink('user_management.php'); ?>
+    </div>
 </div>
 
 

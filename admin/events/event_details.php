@@ -58,7 +58,9 @@ if (!$event) {
         </table>
         <?= adminActions($event, 'event') ?>
     </div>
-    <?= backupLink('event_management.php', "🔙Back to event management"); ?>
+    <div class="backupLinkContainer">
+    <?= backupLink('event_management.php'); ?>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

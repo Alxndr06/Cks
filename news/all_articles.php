@@ -24,7 +24,9 @@ $news = $stmt->fetchAll();
             </div>
 
         <?php endforeach; ?>
-        <?= backupLink('../index.php', "Back to home") ?>
+        <div class="backupLinkContainer">
+            <?= backupLink('../index.php'); ?>
+        </div>
     </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

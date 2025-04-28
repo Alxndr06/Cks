@@ -36,7 +36,9 @@ if (!$article) {
 
         <button type="submit" title="Edit Article">Edit</button>
     </form>
-
+    <div class="backupLinkContainer">
+        <?= backupLink('news_management.php'); ?>
+    </div>
 </div>
 
-<?php require __DIR__ . '/../../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

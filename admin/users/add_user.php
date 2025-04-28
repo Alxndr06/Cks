@@ -102,7 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <button type="submit">Create account</button><br><br>
     </form>
-    <?= backupLink('user_management.php', '🔙back to user management'); ?>
+    <div class="backupLinkContainer">
+        <?= backupLink('user_management.php'); ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

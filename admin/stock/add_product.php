@@ -98,6 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="reset">Reset form</button><br><br>
         </form>
     </div>
+    <div class="backupLinkContainer">
+        <?= backupLink('stock_management.php'); ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

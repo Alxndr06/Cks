@@ -27,7 +27,9 @@ $csrf_token = getCsrfToken();
 
         <button type="submit">Create Event</button>
     </form>
-
+    <div class="backupLinkContainer">
+        <?= backupLink('event_management.php'); ?>
+    </div>
 </div>
 
-<?php require __DIR__ . '/../../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../../includes/footer.php'; ?>

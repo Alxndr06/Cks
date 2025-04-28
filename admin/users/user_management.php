@@ -12,7 +12,9 @@ checkAdmin();
             <a class="dashboard_item" title="User list" href="user_list.php">👮🏼User list</a>
             <a class="dashboard_item" title="Enable or disable self register system" href="#">📋Self register system</a>
         </div>
-        <?= backupLink('../admin_dashboard.php', '🔙back to admin dashboard'); ?>
+        <div class="backupLinkContainer">
+            <?= backupLink('../admin_dashboard.php'); ?>
+        </div>
     </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

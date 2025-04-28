@@ -134,6 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" onclick="return confirm('Bill <?= ucfirst(strtolower($user['username'])) ?> ?')">✅ Bill user</button>
         <button type="reset">❌ Clear form</button>
     </form>
+    <div class="backupLinkContainer">
+        <?= backupLink("user_details.php?id=$id"); ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

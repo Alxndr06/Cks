@@ -3,15 +3,13 @@ require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../config/db_connect.php';
 
 checkAdmin();
-checkMethodPost();
-checkCsrfToken();
 
 // Récupération des informations de l'utilisateur
-if (!isset($_POST['id'])) {
+if (!isset($_GET['id'])) {
     redirectWithError('Unknown user ID.', 'user_list.php');
 }
 
-$id = (int) $_POST['id'];
+$id = (int) $_GET['id'];
 
 
 //On récupére l'utilisateur
@@ -73,7 +71,9 @@ if (!$user) {
     </table>
     <?= AdvancedAdminActions($user) ?>
     <br><br>
-    <?= backupLink('user_list.php','🔙back to list'); ?>
+    <div class="backupLinkContainer">
+        <?= backupLink("user_list.php"); ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>

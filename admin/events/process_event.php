@@ -68,4 +68,3 @@ switch ($action) {
     default:
         redirectWithError('Invalid action', 'event_management.php');
 }
-?>

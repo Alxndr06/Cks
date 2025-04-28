@@ -106,8 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <button type="submit" title="Edit product">Edit product</button><br><br>
     </form>
-
-    <?= backupLink("stock_management.php?id=$id", '🔙back to product list'); ?>
+    <div class="backupLinkContainer">
+        <?= backupLink('stock_management.php'); ?>
+    </div>
 </div>
 
 <?php require '../../includes/footer.php'; ?>

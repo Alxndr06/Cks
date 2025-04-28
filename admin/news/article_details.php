@@ -31,8 +31,9 @@ if (!$article) {
             <p><?= nl2br(htmlspecialchars($article['content'])) ?></p>
 
         </div>
-
-    <?= backupLink('news_management.php', "🔙Back to news management"); ?>
+    <div class="backupLinkContainer">
+    <?= backupLink('news_management.php'); ?>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

@@ -29,7 +29,7 @@ $article = $stmt->fetch();
     </div>
 
     <div class="backupLinkContainer">
-        <?= backupLink('../index.php', "🔙 Back to homepage"); ?>
+        <?= backupLink('../index.php'); ?>
     </div>
 </div>
 

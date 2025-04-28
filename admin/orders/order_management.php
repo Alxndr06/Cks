@@ -62,6 +62,9 @@ $orders = $stmt->fetchAll();
             </tr>
         <?php endforeach; ?>
     </table>
+    <div class="backupLinkContainer">
+        <?= backupLink('../admin_dashboard.php'); ?>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>
