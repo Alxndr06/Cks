@@ -28,7 +28,9 @@ $article = $stmt->fetch();
 
     </div>
 
-    <?= backupLink('../index.php', "🔙Back to homepage"); ?>
+    <div class="backupLinkContainer">
+        <?= backupLink('../index.php', "🔙 Back to homepage"); ?>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
