@@ -152,6 +152,13 @@ a:visited {
     margin-bottom: 10px;
 }
 
+.backupLinkContainer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 20px;
+}
+
+
 #user_resume {
     margin-bottom: 10px;
 }
@@ -426,6 +433,10 @@ button img {
 .news em {
     font-size: 0.85em;
     color: #666;
+}
+
+.news_content {
+    flex-grow: 1;
 }
 
 #connect_button_responsive,
