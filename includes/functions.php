@@ -319,36 +319,58 @@ function adminActions(array $item, string $type) : string {
     $detailsPage = $type . "_details.php";
     $processPage = "process_" . $type . ".php";
 
-    return sprintf('
+    $actions = '
     <td>
-        <form action="%s" method="GET" style="display:inline;">
-            <input type="hidden" name="id" value="%s">
-            <button type="submit" title="Edit %s">✏️</button>
-        </form>
-        |
-        <form action="%s" method="GET" style="display:inline;">
-            <input type="hidden" name="id" value="%s">
-            <button type="submit" title="View %s">🔎</button>
-        </form>
-        |
-        <form method="POST" action="%s" style="display:inline;">
+        <form action="' . htmlspecialchars($editPage) . '" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <button type="submit" title="Edit ' . ucfirst($type) . '">✏️</button>
+        </form>';
+
+if ($type !== 'product') {
+    $actions .= '|
+    <form action="' . htmlspecialchars($detailsPage) . '" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <button type="submit" title="View ' . ucfirst($type) . '">🔎</button>
+        </form> | ';
+}
+        $actions .= '|
+        <form method="POST" action="' . htmlspecialchars($processPage) . '" style="display:inline;">
             <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="id" value="%s">
-            <input type="hidden" name="csrf_token" value="%s">
-            <button type="submit" title="Delete %s" onclick="return confirm(\'Are you sure ?\')">🗑️</button>
-        </form>
-    </td>',
-        htmlspecialchars($editPage),
-        $itemId,
-        ucfirst($type),
-        htmlspecialchars($detailsPage),
-        $itemId,
-        ucfirst($type),
-        htmlspecialchars($processPage),
-        $itemId,
-        $csrfToken,
-        ucfirst($type)
-    );
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <input type="hidden" name="csrf_token" value="' . htmlspecialchars($csrfToken) . '">
+            <button type="submit" title="Delete ' . ucfirst($type) . '" onclick="return confirm(\'Are you sure ?\')">🗑️</button>
+        </form>';
+
+    if ($type == 'product') {
+        $isRestricted = $item['restricted'];
+        $restrictIcon = !$isRestricted ? '⛔' : '✅';
+        $restrictTitle = !$isRestricted ? 'Restrict product' : 'Allow product';
+
+        $actions .= '|
+        <form method="POST" action="' . htmlspecialchars($processPage) . '" style="display:inline;">
+            <input type="hidden" name="action" value="restrict">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <input type="hidden" name="csrf_token" value="' . htmlspecialchars($csrfToken) . '">
+            <button type="submit" title="'. ucfirst($restrictTitle) . '" onclick="return confirm(\'Are you sure ?\')">'. $restrictIcon .'</button>
+        </form>';
+    }
+
+    if ($type === 'user') {
+        $isLocked = $item['locked'];
+        $lockIcon = !$isLocked ? '🔒' : '🔓';
+        $lockTitle = !$isLocked ? 'Lock user' : 'Unlock user';
+
+        $actions .= '|
+        <form method="POST" action="lock_user.php" style="display:inline;">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <input type="hidden" name="csrf_token" value="' . $csrfToken . '">
+            <button type="submit" title="' . $lockTitle . '">' . $lockIcon . '</button>
+        </form>';
+    }
+
+    $actions .= '</td>';
+
+    return $actions;
 }
 
 function logAction($pdo, $admin_id, $target_id, $action, $description) {

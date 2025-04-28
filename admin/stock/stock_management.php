@@ -29,7 +29,7 @@ $products = $stmt->fetchAll();
                     <td class="col-price"><?=$product['price'] ?> €</td>
                     <td class="col-qty"><?= ($product['stock_quantity']) ?></td>
                     <td class="col-access"><?php if (!$product['restricted']): ?>Unrestricted<?php else: ?>Restricted<?php endif; ?></td>
-                    <?= productAdminActions($product) ?>
+                    <?= adminActions($product, 'product') ?>
                 </tr>
             <?php endforeach; ?>
         </table>
