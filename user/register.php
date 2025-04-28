@@ -79,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div id="main-part">
     <h2>Register</h2>
     <?php echo displayErrorOrSuccessMessage() ?>
+    <div class="register_form">
     <form method="POST">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
 
@@ -95,13 +96,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="email" id="email" name="email" required><br><br>
 
         <label for="password">Password :</label>
-        <input type="password" id="password" name="password" autocomplete="off" required><br><br>
+        <input type="password" id="password" name="password" autocomplete="new-password" required><br><br>
 
         <label for="confirmPassword">Confirm password :</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off" ><br><br>
+        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" ><br><br>
 
         <button type="submit">Create account</button><br><br>
     </form>
+    </div>
     <?= backupLink('../login.php', '🔙back to login page'); ?>
 </div>
 
