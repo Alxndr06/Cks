@@ -131,7 +131,7 @@ function backupLink(string $default, string $label = '🔙 Back'): string {
 
 function restrictedAdminActions($user) : string {
     $userId = htmlspecialchars($user['id']);
-    $csrfToken = getCsrfToken(); // 🔹 Stocker le token pour éviter plusieurs appels
+    $csrfToken = getCsrfToken();
     $lockIcon = !$user['locked'] ? '🔒' : '🔓';
 
 
@@ -147,14 +147,13 @@ function restrictedAdminActions($user) : string {
                 <button type="submit">%s</button>
             </form>
             | <form action="bill_user.php" method="GET" style="display:inline;">
-                <input type="hidden" name="csrf_token" value="%s">
                 <input type="hidden" name="id" value="%s">
                 <button type="submit">💲</button>
             </form>
         </td>',
         $userId,
         $csrfToken, $userId, $lockIcon,
-        $csrfToken, $userId
+        $userId
     );
 }
 

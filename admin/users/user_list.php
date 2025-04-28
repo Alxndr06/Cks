@@ -16,7 +16,7 @@ $users = $stmt->fetchAll();
         <tr>
             <th class="col-id">ID</th>
             <th class="col-username">Username</th>
-            <th class="col-note"h>Note</th>
+            <th class="col-note">Note</th>
             <th class="col-role">Role</th>
             <th class="col-locked">Status</th>
             <th class="col-total-spent">Total spent</th>
@@ -40,6 +40,5 @@ $users = $stmt->fetchAll();
         <?= backupLink('user_management.php'); ?>
     </div>
 </div>
-
 
 <?php require __DIR__ . '/../../includes/footer.php'; ?>
