@@ -22,15 +22,16 @@ $orders = $stmt->fetchAll();
     <table class="user-table">
         <tr>
             <th>ID</th>
+            <th>Date</th>
             <th>User</th>
             <th>Items</th>
             <th>Total</th>
-            <th>Date</th>
             <th>Actions</th>
         </tr>
         <?php foreach ($orders as $order): ?>
             <tr>
                 <td><?= $order['id'] ?></td>
+                <td><?= date("d/m/Y H:i", strtotime($order['datetime'])) ?></td>
                 <td><?= htmlspecialchars($order['username']) ?></td>
                 <td>
                     <?php
@@ -48,7 +49,6 @@ $orders = $stmt->fetchAll();
                     ?>
                 </td>
                 <td><?= number_format($order['total_price'], 2) ?> €</td>
-                <td><?= date("d/m/Y H:i", strtotime($order['datetime'])) ?></td>
                 <td>
                     <?php if ($order['status'] === 'validated'): ?>
                         <form method="POST" action="refund_order.php?id=<?= $order['id'] ?>" onsubmit="return confirm('Are you sure you want to refund this order?');">
