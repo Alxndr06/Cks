@@ -698,6 +698,52 @@ button img {
     background-color: #0056b3;
 }
 
+/* Bill user */
+.billing-actions {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.billing-actions h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.billing-actions form {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.billing-actions button {
+    background-color: #4CAF50; /* Vert doux */
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.95em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.billing-actions button:hover {
+    background-color: #45a049;
+}
+
+.billing-actions button[type="reset"] {
+    background-color: #f44336; /* Rouge pour reset */
+}
+
+.billing-actions button[type="reset"]:hover {
+    background-color: #e53935;
+}
+
 @media screen and (max-width: 768px) {
     #main-part {
         width: 95%;
@@ -861,6 +907,37 @@ button img {
     .register_form button {
         font-size: 14px;
         padding: 10px;
+    }
+
+    .manual-billing input[type="text"],
+    .manual-billing input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+        background-color: #f9f9f9;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .manual-billing label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .user-table {
+        font-size: 14px; /* Texte un peu plus petit */
+    }
+
+    .user-table th, .user-table td {
+        padding: 8px;
+    }
+
+    .user-table input[type="number"] {
+        width: 45px;
+        padding: 5px;
+        font-size: 14px;
     }
 
 }

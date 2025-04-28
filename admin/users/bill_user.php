@@ -35,49 +35,61 @@ if (!$products) {
     <h2>Bill <?= ucfirst(strtolower($user['username'])) ?></h2>
     <?= displayErrorOrSuccessMessage() ?>
 
-    <h3>Settle user debt after payment</h3>
-    <form method="POST" action="process_user.php" style="display:inline;">
-        <input type="hidden" name="action" value="settle">
-        <input type="hidden" name="id" value="<?= $id ?>">
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
-        <button type="submit" onclick="return confirm('Settle all debt for <?= ucfirst(strtolower($user['username'])) ?> ?')">✅ Settle debt (<?= $user['note'] ?>€)</button>
-    </form>
+    <div class="billing-actions">
+        <h3>Settle user debt after payment</h3>
+        <form method="POST" action="process_user.php" style="display:inline;">
+            <input type="hidden" name="action" value="settle">
+            <input type="hidden" name="id" value="<?= $id ?>">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+            <button type="submit" onclick="return confirm('Settle all debt for <?= ucfirst(strtolower($user['username'])) ?> ?')">
+                ✅ Settle debt (<?= number_format($user['note'], 2) ?> €)
+            </button>
+        </form>
+    </div>
 
-    <form method="POST" action="process_user.php">
-        <input type="hidden" name="action" value="bill">
-        <input type="hidden" name="id" value="<?= $id ?>">
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
-
+    <div class="billing-actions">
         <h3>Manual billing</h3>
-        <label for="billAmount">Amount to bill :</label>
-        <input type="number" name="billAmount" id="billAmount" step="0.01" placeholder="Enter amount">
+        <form method="POST" action="process_user.php">
+            <input type="hidden" name="action" value="bill">
+            <input type="hidden" name="id" value="<?= $id ?>">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+            <div class="manual-billing">
+                <label for="billAmount">Amount to bill :</label>
+                <input type="number" name="billAmount" id="billAmount" step="0.01" placeholder="Enter amount">
 
-        <label for="reason">Reason :</label>
-        <input type="text" name="reason" id="reason" placeholder="Reason for billing"><br><br>
+                <label for="reason">Reason :</label>
+                <input type="text" name="reason" id="reason" placeholder="Reason for billing"><br><br>
+            </div>
 
-        <h3>Billing with products</h3>
-        <table class="user-table">
-            <tr>
-                <th>Product</th>
-                <th>Price (€)</th>
-                <th>Stock</th>
-                <th>Quantity</th>
-            </tr>
-            <?php foreach ($products as $product): ?>
+            <h3>Billing with products</h3>
+            <table class="user-table">
+                <thead>
                 <tr>
-                    <td><?= htmlspecialchars($product['name']) ?></td>
-                    <td><?= number_format($product['price'], 2) ?></td>
-                    <td><?= (int)$product['stock_quantity'] ?></td>
-                    <td>
-                        <input type="number" name="quantities[<?= $product['id'] ?>]" min="0" max="<?= (int)$product['stock_quantity'] ?>" value="0">
-                    </td>
+                    <th>Product</th>
+                    <th>Price (€)</th>
+                    <th>Stock</th>
+                    <th>Quantity</th>
                 </tr>
-            <?php endforeach; ?>
-        </table><br>
+                </thead>
+                <tbody>
+                <?php foreach ($products as $product): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($product['name']) ?></td>
+                        <td><?= number_format($product['price'], 2) ?></td>
+                        <td><?= (int)$product['stock_quantity'] ?></td>
+                        <td>
+                            <input type="number" name="quantities[<?= $product['id'] ?>]" min="0" max="<?= (int)$product['stock_quantity'] ?>" value="0">
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table><br>
 
-        <button type="submit" onclick="return confirm('Bill <?= ucfirst(strtolower($user['username'])) ?> ?')">✅ Bill user</button>
-        <button type="reset">❌ Clear form</button>
-    </form>
+            <button type="submit" onclick="return confirm('Bill <?= ucfirst(strtolower($user['username'])) ?> ?')">✅ Bill user</button>
+            <button type="reset">❌ Clear form</button>
+        </form>
+    </div>
+
     <div class="backupLinkContainer">
         <?= backupLink("user_details.php?id=$id"); ?>
     </div>
