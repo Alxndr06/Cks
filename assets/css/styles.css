@@ -25,6 +25,12 @@ header {
     z-index: 1000;
 }
 
+h1 a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+}
+
 /* NAV HEADER */
 #navbar-header {
     display: flex;

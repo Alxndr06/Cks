@@ -11,7 +11,7 @@ $script_version = filemtime(__DIR__ . '/../assets/js/script.js');
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="CKS is a private online coffee shop designed for company staff.">
-    <meta name="keywords" content="Coffee, beer, office, CKS">
+    <meta name="keywords" content="Coffee, snack, beer, office, CKS">
     <meta name="author" content="Alexander AULONG">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -28,16 +28,21 @@ $script_version = filemtime(__DIR__ . '/../assets/js/script.js');
         <span></span>
         <span></span>
     </button>
-    <h1>Cks App</h1>
+    <h1><a href="<?= htmlspecialchars($base_url . 'index.php') ?>">Cks App</a></h1>
     <?php if ($isLoggedIn): ?>
-    <a id="disconnect_button" title="Disconnect" href="<?= $base_url ?>logout.php">Disconnect (<?php echo $userUsername ?>)</a>
+        <a id="disconnect_button" title="Disconnect" aria-label="Disconnect" href="<?= $base_url ?>logout.php">
+            Disconnect (<?= htmlspecialchars($userUsername) ?>)
+        </a>
+        <a id="disconnect_button_responsive" title="Disconnect" aria-label="Disconnect" href="<?= $base_url ?>logout.php">
+            🔐
+        </a>
     <?php else: ?>
-        <a id="connect_button" title="Connect" href="<?= $base_url ?>login.php">Connect</a>
-    <?php endif; ?>
-    <?php if ($isLoggedIn): ?>
-        <a id="disconnect_button_responsive" title="Disconnect" href="<?= $base_url ?>logout.php">🔐</a>
-    <?php else: ?>
-        <a id="connect_button_responsive" title="Connect" href="<?= $base_url ?>login.php">🔓</a>
+        <a id="connect_button" title="Connect" aria-label="Connect" href="<?= $base_url ?>login.php">
+            Connect
+        </a>
+        <a id="connect_button_responsive" title="Connect" aria-label="Connect" href="<?= $base_url ?>login.php">
+            🔓
+        </a>
     <?php endif; ?>
 </header>
 <!--BARRE DE NAVIGATION-->
