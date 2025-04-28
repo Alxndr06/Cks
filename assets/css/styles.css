@@ -610,7 +610,8 @@ button img {
     background-color: #2980b9;
 }
 
-.backup-button {
+.backup-button,
+.open-button {
     margin-top: 15px;
     display: inline-block;
     padding: 5px;
@@ -621,7 +622,8 @@ button img {
     align-self: center;
 }
 
-.backup-button:hover {
+.backup-button:hover,
+.open-button:hover {
     background-color: lightgray;
     color: black;
 }

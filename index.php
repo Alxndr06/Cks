@@ -25,7 +25,7 @@ $news = $stmt->fetchAll();
    </div>
 
     <?php endforeach; ?>
-    <a title="Read more articles" href="news/all_articles.php">Read all articles</a>
+    <a class="open-button" title="Read more articles" href="news/all_articles.php">Read all articles</a>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
