@@ -78,6 +78,7 @@ switch ($action) {
         break;
     case 'edit':
         checkCsrfToken();
+
         $id = (int) $_POST['id'];
         $username = preg_replace('/\s+/', '', trim($_POST['username']));
         $lastname = trim($_POST['lastname']);
@@ -102,6 +103,50 @@ switch ($action) {
             }
         }
         break;
+    case 'pay':
+        checkCsrfToken();
+
+        if (!isset($_POST['id'])) {
+            redirectWithError('Unknown user ID', 'user_list.php');
+        }
+
+        $id = (int) $_POST['id'];
+        $amountPaid = (double) $_POST['payAmount'];
+
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch();
+
+        $note = (double) $user['note'];
+
+        if ($note <=0) {
+            redirectWithError('User does not have any bill.', "bill_user.php?id=$id");
+        }
+
+        if ($amountPaid <= 0) {
+            redirectWithError('Invalid payment amount.', "bill_user.php?id=$id");
+        }
+
+        if ($amountPaid > $note) {
+            redirectWithError('Cannot pay more than the current bill.', "bill_user.php?id=$id");
+        }
+
+        // Mise à jour de la note et ajoute le dernier paiement à l'utilisateur (format datetime)
+        $now = date('Y-m-d H:i:s');
+        $stmt = $pdo->prepare("UPDATE users SET note = note - ?, last_payment = ? WHERE id = ?");
+        if (!$stmt->execute([$amountPaid, $now, $id])) {
+            redirectWithError('Error when paying user bill', "bill_user.php?id=$id");
+        }
+
+        // Enregistre le paiement
+        if (!recordPayment($pdo, $id, $amountPaid, $_SESSION['id'])) {
+            redirectWithError('Payment could not be recorded.', "bill_user.php?id=$id");
+        }
+
+        // Tout s'est bien passé
+        logAction($pdo, $_SESSION['id'], $id, 'user_payment', htmlspecialchars($user['username'] . " (ID: $id) payed off part his bill. ($amountPaid €/$note €)"));
+        redirectWithSuccess("Bill has been partially paid ($amountPaid €) and payment has been recorded.", 'user_list.php');
+        break;
     case 'settle':
         checkCsrfToken();
 
@@ -122,9 +167,18 @@ switch ($action) {
         }
 
         // Mise à jour de la note
-        $stmt = $pdo->prepare("UPDATE users SET note = 0 WHERE id = ?");
-        if (!$stmt->execute([$id])) {
+        $now = date('Y-m-d H:i:s');
+        $stmt = $pdo->prepare("UPDATE users SET note = 0, last_payment = ? WHERE id = ?");
+        if (!$stmt->execute([$now, $id])) {
             redirectWithError('Error when settling user bill', "bill_user.php?id=$id");
+        }
+
+        // Ajout le dernier paiment à l'utilisateur (format datetime)
+        $now = date('Y-m-d H:i:s');
+        $stmt = $pdo->prepare("UPDATE users SET last_payment = ? WHERE id = ?");
+        if (!$stmt->execute([$now, $id])) {
+
+            redirectWithError('Error when setting last payment', "bill_user.php?id=$id");
         }
 
         logAction($pdo, $_SESSION['id'], $id, 'user_payment', htmlspecialchars($user['username'] . " (ID: $id) settled his bill. ($note €)"));

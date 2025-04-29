@@ -62,7 +62,7 @@ if (!$user) {
         </tr>
         <tr>
             <th>LAST PAYMENT</th>
-            <td><em style="color: gray;">Coming soon</em></td>
+            <td><?= htmlspecialchars(date("d/m/Y H:i", strtotime($user['last_payment']))) ?></td>
         </tr>
         <tr>
             <th>TOTAL SPENT</th>
