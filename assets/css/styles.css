@@ -744,6 +744,25 @@ button img {
     background-color: #e53935;
 }
 
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.display-stat {
+    display: inline-block;
+    background-color: darkseagreen;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    align-self: center;
+}
+
 @media screen and (max-width: 768px) {
     #main-part {
         width: 95%;
@@ -832,7 +851,6 @@ button img {
         background-color: white;
         color: black;
     }
-
 
     /* ✅ Responsive login/logout icons */
     #connect_button_responsive,
