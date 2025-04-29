@@ -348,3 +348,8 @@ function recordPayment($pdo, int $paymentAuthorId, float $amountPaid, int $admin
         $adminId
     ]);
 }
+
+function formatLastPayment($date): string
+{
+    return $date ? date('d/m/Y H:i', strtotime($date)) : 'No payment yet.';
+}

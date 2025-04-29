@@ -11,7 +11,6 @@ if (!isset($_GET['id'])) {
 
 $id = (int) $_GET['id'];
 
-
 //On récupére l'utilisateur
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$id]);
@@ -62,7 +61,7 @@ if (!$user) {
         </tr>
         <tr>
             <th>LAST PAYMENT</th>
-            <td><?= htmlspecialchars(date("d/m/Y H:i", strtotime($user['last_payment']))) ?></td>
+            <td><?= formatLastPayment($user['last_payment']) ?></td>
         </tr>
         <tr>
             <th>TOTAL SPENT</th>

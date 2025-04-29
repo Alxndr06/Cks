@@ -34,7 +34,7 @@ if (!$products) {
 <div id="main-part">
     <h2>Bill <?= ucfirst(strtolower($user['username'])) ?></h2>
     <?= displayErrorOrSuccessMessage() ?>
-<h3>PAYMENT</h3>
+<h3>VALIDATE PAYMENT</h3>
     <div class="billing-actions">
         <h3>Settle total user debt</h3>
         <form method="POST" action="process_user.php" style="display:inline;">
