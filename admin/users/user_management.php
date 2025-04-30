@@ -10,7 +10,7 @@ checkAdmin();
         <div class="dashboard_container">
             <a class="dashboard_item" title="Create a new user" href="add_user.php">➕Create new user</a>
             <a class="dashboard_item" title="User list" href="user_list.php">👥User list</a>
-            <a class="dashboard_item" title="Enable or disable self register system" href="#">📋Self register system</a>
+            <a class="dashboard_item" title="Register system management" href="register_system.php">📋Register system</a>
         </div>
         <div class="backupLinkContainer">
             <?= backupLink('../admin_dashboard.php'); ?>

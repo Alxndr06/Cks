@@ -1,4 +1,5 @@
 <?php
+global $selfRegistration, $isLoggedIn;
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../config/db_connect.php';
 
@@ -49,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($errors)) {
         redirectWithError(implode('<br>', $errors), 'register.php');
-
     }
 
     //Vérification de l'unicité du mail
@@ -68,8 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt = $pdo->prepare("INSERT INTO users (username, lastname, firstname, email, password, is_active, activation_token) VALUES (?, ?, ?, ?, ?, ?, ?)");
     if ($stmt->execute([$username, $lastname, $firstname, $email, $password, $is_active, $activation_token])) {
-        sendRegisterMail($email, $firstname, $activation_token);
-        redirectWithSuccess('Your account has been created. You will receive an activation link by mail.', 'index.php');
+        if ($selfRegistration) {
+            sendRegisterMail($email, $firstname, $activation_token);
+            redirectWithSuccess('Your account has been created. You will receive an activation link by mail.', '../index.php');
+        } else {
+            redirectWithSuccess('Your account has been created. An admin will activate your account soon.', '../index.php');
+        }
     } else {
         redirectWithError('Something went wrong. Please try again later.', 'register.php');
     }

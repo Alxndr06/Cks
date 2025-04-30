@@ -23,6 +23,7 @@ if (!$user) {
 
     <div id="main-part">
         <h2>Edit user</h2>
+        <?= displayErrorOrSuccessMessage() ?>
         <form method="POST" action="process_user.php">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="id" value="<?= $id ?>">

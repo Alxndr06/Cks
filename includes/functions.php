@@ -306,7 +306,7 @@ return $message;
 }
 
 function sendRegisterMail($email, $firstname, $activation_token) : void {
-    $activation_link = "https://cks.aulong.fr/user/activate.php?token=" . urlencode($activation_token);
+    $activation_link = "https://cks.aulong.fr/user/self_activate.php?token=" . urlencode($activation_token);
     $subject = "Activation de votre compte";
     $message = "Bonjour $firstname,\n\nVotre compte a bien été créé.\nCliquez sur le lien suivant pour activer votre compte :\n$activation_link\n\nMerci.";
     $headers = "From: no-reply@aulong.fr";
@@ -314,19 +314,12 @@ function sendRegisterMail($email, $firstname, $activation_token) : void {
     mail($email, $subject, $message, $headers);
 }
 
-function selfRegisterActivatedOrNot($selfRegistration) : string {
-    if (!$selfRegistration) {
-        return sprintf('
-        <p class="small_message">No account yet ? <a href="mailto:contact@aulong.fr">Contact me</a></p><br>
-        <p class="small_message">(self registration is disabled)</p>
-        ');
-    } else {
-        return sprintf('
-        <p class="small_message">No account yet ?</p> 
-        <a class="small_message" href="../user/register.php">Register</a>
-        ');
-    }
+function get_setting($pdo, $name) {
+    $stmt = $pdo->prepare("SELECT value FROM settings WHERE name = ?");
+    $stmt->execute([$name]);
+    return $stmt->fetchColumn();
 }
+
 
 function redirectWithError(string $message, string $location): void {
     $_SESSION['error'] = $message;

@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         <input type="password" id="password" name="password" autocomplete="off" required><br><br>
 
         <button class="login_button" type="submit">Login</button><br><br>
-        <?= selfRegisterActivatedOrNot($selfRegistration) ?>
+        <p class="small_message">No account yet ?</p>
+        <a class="small_message" href="user/register.php">Register</a>
     </form>
 
     </div>
