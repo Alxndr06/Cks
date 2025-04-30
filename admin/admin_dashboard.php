@@ -10,6 +10,9 @@ $totalDebt = $stmt->fetchColumn();
 $stmt = $pdo->query("SELECT count(*) FROM `users`");
 $totalUser = $stmt->fetchColumn();
 
+$stmt = $pdo->query("SELECT COUNT(*) FROM `users` WHERE is_active = 0");
+$totalPending = $stmt->fetchColumn();
+
 ?>
 
 <div id="main-part">
@@ -17,6 +20,7 @@ $totalUser = $stmt->fetchColumn();
     <div class="stats-container">
         <div class="display-stat">💵 Total debt: <?= number_format($totalDebt, 2) ?>€</div>
         <div class="display-stat">👥 Total users: <?= $totalUser ?></div>
+        <div class="display-stat">⏳ Pending users: <?= $totalPending ?></div>
     </div>
     <div class="dashboard_container">
         <a class="dashboard_item" title="News management" href="news/news_management.php">📰News Management</a></li>
@@ -26,6 +30,7 @@ $totalUser = $stmt->fetchColumn();
         <a class="dashboard_item" title="Finance" href="users/debts_management.php">💵Finance</a>
         <a class="dashboard_item" title="Order management" href="orders/order_management.php">📋Order Management</a>
         <a class="dashboard_item" title="Server logs" href="logs.php">📜Server logs</a>
+        <a class="dashboard_item" title="Server setting" href="#">⚙️Server settings</a>
     </div>
 </div>
 
