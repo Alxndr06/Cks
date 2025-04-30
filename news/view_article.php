@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../config/db_connect.php';
 
+checkConnect();
+
 if (!isset($_GET['id'])) {
     redirectWithError('News article not found!', 'index.php');
 }
