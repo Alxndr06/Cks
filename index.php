@@ -1,4 +1,5 @@
 <?php
+global $isLoggedIn;
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/config/db_connect.php';
 
@@ -11,6 +12,7 @@ $news = $stmt->fetchAll();
 <div id="main-part">
 <h2>Latest news</h2>
     <?php echo displayErrorOrSuccessMessage() ?>
+    <?php if($isLoggedIn): ?>
     <?php foreach ($news as $article): ?>
    <div class="news">
        <h3><?= htmlspecialchars($article['title']) ?></h3>
@@ -26,6 +28,11 @@ $news = $stmt->fetchAll();
 
     <?php endforeach; ?>
     <a class="open-button" title="Read more articles" href="news/all_articles.php">Read all articles</a>
+    <?php else: ?>
+    <div class="news">
+        <p>Veuillez vous connecter pour voir les news.</p>
+    </div>
+    <?php endif; ?>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
