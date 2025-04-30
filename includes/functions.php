@@ -54,8 +54,7 @@ function validateString(string $str) : string {
 #[NoReturn] function logoutAndRedirect(string $message): void {
     session_unset();
     session_destroy();
-    header("Location: ../login.php?message=" . urlencode($message));
-    exit;
+    redirectWithError($message, '../login.php');
 }
 
 //Colorie la note en fonction de son montant
