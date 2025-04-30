@@ -74,11 +74,14 @@ function checkNoteIsNull() : void {
 function checkConnect() : void {
     global $pdo;
 
-    // Durée max de la session (15mn)
-    $timeout = 900;
+    // Durée max de la session (20mn)
+    $timeout = 1200;
 
     if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > $timeout) {
-        logoutAndRedirect('Session expired');
+        session_unset();
+        session_destroy();
+        header("Location: ../login.php");
+        exit;
     }
     // Mise à jour de l'activité
     $_SESSION['last_activity'] = time();
