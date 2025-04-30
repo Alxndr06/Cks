@@ -24,6 +24,10 @@ $inactiveUsers = $stmt->fetchAll();
         </form>
     </div>
 
+    <?php if(empty($inactiveUsers)): ?>
+        <p>There is no pending user.</p>
+    <?php else: ?>
+    <h3>Unactive users</h3>
     <table class="user-table">
         <tr>
             <th class="col-id">ID</th>
@@ -50,6 +54,7 @@ $inactiveUsers = $stmt->fetchAll();
                 </td>
             </tr>
         <?php endforeach; ?>
+        <?php endif; ?>
     </table>
 
     <div class="backupLinkContainer">
