@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 26 avr. 2025 à 20:00
+-- Généré le : dim. 04 mai 2025 à 11:56
 -- Version du serveur : 10.11.11-MariaDB-deb12
 -- Version de PHP : 8.2.28
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `aulon1930571_2z3m`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `participants` text DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `is_active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -71,12 +89,27 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
+  `payment_author_id` int(11) NOT NULL,
+  `amount_paid` decimal(10,2) NOT NULL,
+  `payment_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `admin_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `products`
 --
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `category` enum('drinks','snacking','coffee') NOT NULL,
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock_quantity` int(11) NOT NULL DEFAULT 0,
@@ -84,6 +117,19 @@ CREATE TABLE `products` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `restricted` tinyint(1) NOT NULL DEFAULT 0,
   `image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `value` text NOT NULL,
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -104,6 +150,7 @@ CREATE TABLE `users` (
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `locked` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_payment` datetime DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT 0,
   `activation_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -111,6 +158,13 @@ CREATE TABLE `users` (
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_author` (`author_id`);
 
 --
 -- Index pour la table `logs`
@@ -138,6 +192,13 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
@@ -148,6 +209,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `logs`
@@ -174,6 +241,12 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
@@ -182,6 +255,12 @@ ALTER TABLE `users`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `fk_author` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `logs`
