@@ -14,9 +14,9 @@ $action = $_POST['action'];
 
 switch ($action) {
     case 'add':
-        $title = sanitize($_POST['title']);
-        $address = sanitize($_POST['address']);
-        $description = sanitize($_POST['description']);
+        $title = trim($_POST['title']);
+        $address = trim($_POST['address']);
+        $description = trim($_POST['description']);
         $date = $_POST['date'];
         $isActive = 1;
 
@@ -36,9 +36,9 @@ switch ($action) {
             redirectWithError('Unknown event ID', 'event_management.php');
         }
         $id = (int) $_POST['id'];
-        $title = sanitize($_POST['title']);
-        $address = sanitize($_POST['address']);
-        $description = sanitize($_POST['description']);
+        $title = trim($_POST['title']);
+        $address = trim($_POST['address']);
+        $description = trim($_POST['description']);
         $date = $_POST['date'];
 
         if (strtotime($date) < time()) {
