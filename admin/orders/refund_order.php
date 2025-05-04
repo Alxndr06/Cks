@@ -11,7 +11,7 @@ $orderId = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ?");
 $stmt->execute([$orderId]);
-$event = $stmt->fetch();
+$order = $stmt->fetch();
 
 if (!$order) {
     redirectWithError('Unknown order', 'order_management.php');
