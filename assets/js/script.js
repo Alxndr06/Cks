@@ -16,6 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalItemsSpan = document.querySelector("#total-items");
     const totalPriceSpan = document.querySelector("#total-price");
 
+    // Sélection des éléments du résumé flottant
+    const liveSummary = document.getElementById("live-summary");
+    const floatingSummary = document.getElementById("floating-summary");
+    const floatingItems = document.getElementById("floating-items");
+    const floatingPrice = document.getElementById("floating-price");
+
     function updateAll() {
         let totalItems = 0;
         let totalPrice = 0;
@@ -32,8 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
             localDisplay.textContent = qty;
         });
 
+        // Mise à jour des deux résumés
         totalItemsSpan.textContent = totalItems;
         totalPriceSpan.textContent = totalPrice.toFixed(2);
+
+        floatingItems.textContent = totalItems;
+        floatingPrice.textContent = totalPrice.toFixed(2);
     }
 
     quantityInputs.forEach(input => {
@@ -41,6 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     updateAll(); // initial update
+
+    // Intersection Observer pour cacher/afficher le résumé flottant
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                floatingSummary.classList.add("hidden");
+            } else {
+                floatingSummary.classList.remove("hidden");
+            }
+        });
+    });
+
+    observer.observe(liveSummary);
 });
 
 // Confirmation lors de l'achat et listing des produits séléctionnés

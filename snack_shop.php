@@ -28,6 +28,10 @@ $products = $stmt->fetchAll();
             <p>🧾 Total items selected: <span id="total-items">0</span></p>
             <p>💶 Estimated total: <span id="total-price">0.00</span> €</p>
         </div>
+        <div id="floating-summary" class="hidden">
+            <p>🧾 Total items selected: <span id="floating-items">0</span></p>
+            <p>💶 Estimated total: <span id="floating-price">0.00</span> €</p>
+        </div>
 
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
