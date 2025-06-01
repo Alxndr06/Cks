@@ -40,6 +40,13 @@ if (!$product) {
         <label for="stock_quantity">Stock quantity :</label>
         <input type="number" id="stock_quantity" name="stock_quantity" value="<?= htmlspecialchars($product['stock_quantity']) ?>" required><br><br>
 
+        <label for="category" title="Choose product category">Product category</label>
+        <select name="category" id="category" required>
+            <option value="drinks" <?= $product['category'] === 'drinks' ? 'selected' : '' ?>>Drinks</option>
+            <option value="snacking" <?= $product['category'] === 'snacking' ? 'selected' : '' ?>>Snack</option>
+            <option value="coffee" <?= $product['category'] === 'coffee' ? 'selected' : '' ?>>Coffee</option>
+        </select><br><br>
+
         <label for="restricted" title="Should this product be restricted to users ?">Restrict product to users ?</label>
         <select name="restricted" id="restricted" required>
             <option value="0" <?= $product['restricted'] == 0 ? 'selected' : '' ?>>Unrestricted</option>

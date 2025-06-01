@@ -21,6 +21,7 @@ switch ($action) {
         $description = trim($_POST['description']);
         $price = $_POST['price'];
         $quantity = $_POST['quantity'];
+        $category = $_POST['category'];
         $restricted = $_POST['restricted'];
         $imagePath = null;
 
@@ -32,6 +33,9 @@ switch ($action) {
         }
         if (!in_array($restricted, ['0', '1'])) {
             redirectWithError('Invalid restriction setting.', 'add_product.php');
+        }
+        if (!in_array($category, ['drinks', 'coffee', 'snacking'])) {
+            redirectWithError('Invalid category.', 'add_product.php');
         }
 
         //Vérification de l'unicité du produit
@@ -64,8 +68,8 @@ switch ($action) {
             }
         }
 
-        $stmt = $pdo->prepare("INSERT INTO products (name, description, price, stock_quantity, restricted, image) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($stmt->execute([$name, $description, $price, $quantity, $restricted, $imagePath])) {
+        $stmt = $pdo->prepare("INSERT INTO products (name, category, description, price, stock_quantity, restricted, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        if ($stmt->execute([$name, $category, $description, $price, $quantity, $restricted, $imagePath])) {
             logAction($pdo, $_SESSION['id'], "Stock", 'add_product', "Name: " . $name . " description: " . $description . " price: " . $price . " quantity: " . $quantity . " restricted: " . $restricted);
             redirectWithSuccess('Added product successfully.', 'stock_management.php');
         } else {
@@ -83,6 +87,7 @@ switch ($action) {
         $description = trim($_POST['description']);
         $price = (double)$_POST['price'];
         $stock_quantity = (int) $_POST['stock_quantity'];
+        $category = $_POST['category'];
         $restricted = $_POST['restricted'];
 
         // On récup l'image afin de ne pas écraser l'ancienne.
@@ -118,8 +123,8 @@ switch ($action) {
             }
         }
 
-        $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, price = ?, stock_quantity = ?, restricted = ?, image = ? WHERE id = ?");
-        if ($stmt->execute([$name, $description, $price, $stock_quantity, $restricted, $imagePath, $id])) {
+        $stmt = $pdo->prepare("UPDATE products SET name = ?, category = ?, description = ?, price = ?, stock_quantity = ?, restricted = ?, image = ? WHERE id = ?");
+        if ($stmt->execute([$name, $category, $description, $price, $stock_quantity, $restricted, $imagePath, $id])) {
             logAction($pdo, $_SESSION['id'], null, 'update_product', 'Updated product: ' . htmlspecialchars($name));
             redirectWithSuccess('Product edited successfully', 'stock_management.php');
         } else {

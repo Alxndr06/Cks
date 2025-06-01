@@ -27,6 +27,13 @@ $csrf_token = getCsrfToken();
             <label for="quantity">Quantity :</label>
             <input type="number" id="quantity" name="quantity" min="1" max="999" required><br><br>
 
+            <label for="category" title="Choose product category">Product category</label>
+            <select name="category" id="category" required>
+                <option value="drinks" title="Drinks">Drinks</option>
+                <option value="snacking" title="Snacking">Snack</option>
+                <option value="coffee" title="coffee">Coffee</option>
+            </select><br><br>
+
             <label for="restricted" title="Should this product be restricted to users ?">Restrict product to users ?</label>
             <select name="restricted" id="restricted" required>
                 <option value="0" title="Users can see and purchase this product in snack shop">Unrestricted</option>
