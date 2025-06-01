@@ -251,6 +251,11 @@ switch ($action) {
         $stmt = $pdo->prepare("UPDATE users SET note = note + ?, total_spent = total_spent + ? WHERE id = ?");
         $stmt->execute([$finalAmount, $finalAmount, $id]);
 
+        $itemsJson = json_encode($productDetails);
+        // Mise à jour de la table orders
+        $stmt = $pdo->prepare("INSERT INTO orders (user_id, datetime, items, total_price) VALUES (?, NOW(), ?, ?)");
+        $stmt->execute([$id, $itemsJson, $totalProductAmount]);
+
         // On log
         $logMessage = "Total: {$finalAmount} €";
         if ($manualAmount > 0) $logMessage .= " | Manual: {$manualAmount} €";
