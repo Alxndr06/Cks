@@ -24,11 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateAll() {
         let totalItems = 0;
+        let itemList = [];
         let totalPrice = 0;
 
         quantityInputs.forEach(input => {
             const qty = parseInt(input.value) || 0;
             const price = parseFloat(input.dataset.price) || 0;
+            const name = input.dataset.name; // Dernier ajout a enlever si annulation
 
             totalItems += qty;
             totalPrice += qty * price;
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = input.closest(".product-card");
             const localDisplay = card.querySelector(".selected-count span");
             localDisplay.textContent = qty;
+
         });
 
         // Mise à jour des deux résumés

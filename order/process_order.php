@@ -64,7 +64,7 @@ $items_json = json_encode($purchaseList);
 
 $stmt = $pdo->prepare("INSERT INTO orders (user_id, datetime, items, total_price) VALUES (?, NOW(), ?, ?)");
 if ($stmt->execute([$user_id, $items_json, $total_price])) {
-    redirectWithSuccess('Order placed successfully', '../snack_shop.php');
+    redirectWithSuccess('Order placed successfully', '../snack_portal.php');
 } else {
-    redirectWithError('Error when placing order', '../snack_shop.php');
+    redirectWithError('Error when placing order', '../snack_portal.php');
 }

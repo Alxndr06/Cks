@@ -44,10 +44,12 @@ if ($category === 'all') {
 
             <div id="live-summary">
                 <p>🧾 Total items selected: <span id="total-items">0</span></p>
+                <p>🍫 Items: <span id="selected-items">No item selected</span></p>
                 <p>💶 Estimated total: <span id="total-price">0.00</span> €</p>
             </div>
             <div id="floating-summary" class="hidden">
                 <p>🧾 Total items selected: <span id="floating-items">0</span></p>
+                <p>🍫 Items: <span id="floating-selected-items">No item selected</span></p>
                 <p>💶 Estimated total: <span id="floating-price">0.00</span> €</p>
             </div>
 

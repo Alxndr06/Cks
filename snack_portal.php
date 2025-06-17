@@ -9,6 +9,7 @@ $csrf_token = getCsrfToken();
 
 <div id="main-part" role="main">
     <h2>Choose a category</h2>
+    <?php echo displayErrorOrSuccessMessage() ?>
     <div class="category_container">
         <a href="snack_shop.php?cat=drinks"><img class="category_item" alt="Fresh Drinks" src="assets/img/drinks.png"></a>
         <a href="snack_shop.php?cat=snacking"><img class="category_item" alt="Snacks" src="assets/img/snacking.png"></a>
