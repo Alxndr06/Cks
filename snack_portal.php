@@ -5,6 +5,11 @@ require_once __DIR__ . '/config/db_connect.php';
 require_once __DIR__ . '/includes/functions.php';
 
 $csrf_token = getCsrfToken();
+
+// J'ajoute le panier dans la session si c'est pas déjà fait.
+if(!isset($_SESSION['cks_cart'])){
+    $_SESSION['cks_cart'] = [];
+}
 ?>
 
 <div id="main-part" role="main">

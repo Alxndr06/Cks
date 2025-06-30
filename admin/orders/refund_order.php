@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../includes/functions.php';
 
 checkMethodPost();
 checkCsrfToken();
-checkConnect();
+checkAdmin();
 
 $orderId = $_GET['id'];
 

@@ -161,37 +161,11 @@ function adminActions(array $item, string $type): string {
     $csrfToken = getCsrfToken();
 
     $editPage = "edit_" . $type . ".php";
-    $detailsPage = $type . "_details.php";
     $processPage = "process_" . $type . ".php";
 
     $actions = '<td>';
 
     $buttons = [];
-
-    // Bouton "Edit"
-    $buttons[] = '
-        <form action="' . htmlspecialchars($editPage) . '" method="GET" style="display:inline;">
-            <input type="hidden" name="id" value="' . $itemId . '">
-            <button type="submit" title="Edit ' . ucfirst($type) . '">✏️</button>
-        </form>';
-
-    // Bouton "View" (pas pour les produits)
-    if ($type !== 'product') {
-        $buttons[] = '
-        <form action="' . htmlspecialchars($detailsPage) . '" method="GET" style="display:inline;">
-            <input type="hidden" name="id" value="' . $itemId . '">
-            <button type="submit" title="View ' . ucfirst($type) . '">🔎</button>
-        </form>';
-    }
-
-    // Bouton "Delete"
-    $buttons[] = '
-        <form method="POST" action="' . htmlspecialchars($processPage) . '" style="display:inline;">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="id" value="' . $itemId . '">
-            <input type="hidden" name="csrf_token" value="' . htmlspecialchars($csrfToken) . '">
-            <button type="submit" title="Delete ' . ucfirst($type) . '" onclick="return confirm(\'Are you sure?\')">🗑️</button>
-        </form>';
 
     // Si c'est un produit : bouton "Restrict/Unrestrict"
     if ($type === 'product') {
@@ -215,6 +189,13 @@ function adminActions(array $item, string $type): string {
         $lockTitle = !$isLocked ? 'Lock user' : 'Unlock user';
 
         $buttons[] = '
+        <form method="GET" action="../orders/user_order_details.php" style="display:inline;">
+            <input type="hidden" name="id" value=" '. $itemId .'">
+            <button type="submit" title="View order history">📋</button>
+        </form>
+        ';
+
+        $buttons[] = '
         <form method="POST" action="' . htmlspecialchars($processPage) . '" style="display:inline;">
             <input type="hidden" name="action" value="lock">
             <input type="hidden" name="id" value="' . $itemId . '">
@@ -229,6 +210,22 @@ function adminActions(array $item, string $type): string {
             <button type="submit" title="Bill user">💲</button>
         </form>';
     }
+
+    // Bouton "Edit"
+    $buttons[] = '
+        <form action="' . htmlspecialchars($editPage) . '" method="GET" style="display:inline;">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <button type="submit" title="Edit ' . ucfirst($type) . '">✏️</button>
+        </form>';
+
+    // Bouton "Delete"
+    $buttons[] = '
+        <form method="POST" action="' . htmlspecialchars($processPage) . '" style="display:inline;">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="id" value="' . $itemId . '">
+            <input type="hidden" name="csrf_token" value="' . htmlspecialchars($csrfToken) . '">
+            <button type="submit" title="Delete ' . ucfirst($type) . '" onclick="return confirm(\'Are you sure?\')">🗑️</button>
+        </form>';
 
     // On assemble les boutons avec ' | ' entre eux
     $actions .= implode(' | ', $buttons);
@@ -357,3 +354,93 @@ function formatLastPayment($date): string
 {
     return $date ? date('d/m/Y H:i', strtotime($date)) : 'No payment yet.';
 }
+
+/* Pagination */
+function paginate(PDO $pdo, string $table, int $page = 1, int $items_per_page = 10, string $order_by = "id DESC"): array {
+    $offset = ($page - 1) * $items_per_page;
+
+    // Récupération des données paginées
+    $stmt = $pdo->prepare("SELECT * FROM {$table} ORDER BY $order_by LIMIT :offset, :limit");
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $items_per_page, PDO::PARAM_INT);
+    $stmt->execute();
+    $items = $stmt->fetchAll();
+
+    // Calcul du total d’éléments
+    $total = $pdo->query("SELECT COUNT(*) FROM {$table}")->fetchColumn();
+    $total_pages = ceil($total / $items_per_page);
+
+    return [
+        'items' => $items,
+        'current_page' => $page,
+        'total_pages' => $total_pages,
+        'total_items' => $total,
+        'items_per_page' => $items_per_page,
+    ];
+}
+
+function paginateQuery(PDO $pdo, string $queryBase, string $countQuery, int $page = 1, int $items_per_page = 10, array $params = []): array {
+    $offset = ($page - 1) * $items_per_page;
+
+    // Ajouter LIMIT/OFFSET
+    $queryWithLimit = $queryBase . " LIMIT :offset, :limit";
+    $stmt = $pdo->prepare($queryWithLimit);
+
+    // Bind des paramètres nommés (ex: :user_id)
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    // Bind offset/limit
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $items_per_page, PDO::PARAM_INT);
+    $stmt->execute();
+    $items = $stmt->fetchAll();
+
+    // Total count
+    $stmtTotal = $pdo->prepare($countQuery);
+    foreach ($params as $key => $value) {
+        $stmtTotal->bindValue($key, $value);
+    }
+    $stmtTotal->execute();
+    $total = $stmtTotal->fetchColumn();
+
+    $total_pages = ceil($total / $items_per_page);
+
+    return [
+        'items' => $items,
+        'current_page' => $page,
+        'total_pages' => $total_pages,
+        'total_items' => $total,
+        'items_per_page' => $items_per_page,
+    ];
+}
+
+
+
+function renderCartSummaryElements(PDO $pdo): array {
+    $cart = $_SESSION['cks_cart'] ?? [];
+    $totalItems = 0;
+    $totalPrice = 0;
+    $summaryText = [];
+
+    foreach ($cart as $productId => $qty) {
+        $stmt = $pdo->prepare("SELECT name, price FROM products WHERE id = ?");
+        $stmt->execute([$productId]);
+        $product = $stmt->fetch();
+
+        if ($product) {
+            $lineTotal = $qty * $product['price'];
+            $totalItems += $qty;
+            $totalPrice += $lineTotal;
+            $summaryText[] = htmlspecialchars($product['name']) . " x$qty";
+        }
+    }
+
+    return [
+        'items' => $totalItems,
+        'price' => number_format($totalPrice, 2),
+        'list' => $summaryText ? implode('<br>', $summaryText) : 'No item selected'
+    ];
+}
+

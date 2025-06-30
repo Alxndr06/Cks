@@ -8,7 +8,7 @@ checkCsrfToken();
 checkConnect();
 
 $user_id = $_SESSION['id'];
-$quantities = $_POST['quantity'];
+$quantities = $_SESSION['cks_cart'] ?? [];
 
 // Vérification que la variable est bien un tableau
 if (!is_array($quantities)) {
@@ -64,6 +64,7 @@ $items_json = json_encode($purchaseList);
 
 $stmt = $pdo->prepare("INSERT INTO orders (user_id, datetime, items, total_price) VALUES (?, NOW(), ?, ?)");
 if ($stmt->execute([$user_id, $items_json, $total_price])) {
+    unset($_SESSION['cks_cart']);
     redirectWithSuccess('Order placed successfully', '../snack_portal.php');
 } else {
     redirectWithError('Error when placing order', '../snack_portal.php');

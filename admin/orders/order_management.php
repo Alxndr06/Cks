@@ -4,15 +4,18 @@ require_once __DIR__ . '/../../config/db_connect.php';
 
 checkAdmin();
 
-// Récupérer les commandes avec nom utilisateur
-$stmt = $pdo->prepare("
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$queryBase = "
     SELECT orders.id, orders.user_id, users.username, orders.total_price, orders.datetime, orders.items, orders.status
     FROM orders
     JOIN users ON orders.user_id = users.id
     ORDER BY orders.datetime DESC
-");
-$stmt->execute();
-$orders = $stmt->fetchAll();
+";
+
+$countQuery = "SELECT COUNT(*) FROM orders";
+
+$result = paginateQuery($pdo, $queryBase, $countQuery, $page, 15);
 
 ?>
 
@@ -28,7 +31,7 @@ $orders = $stmt->fetchAll();
             <th>Total</th>
             <th>Actions</th>
         </tr>
-        <?php foreach ($orders as $order): ?>
+        <?php foreach ($result['items'] as $order): ?>
             <tr>
                 <td><?= $order['id'] ?></td>
                 <td><?= date("d/m/Y H:i", strtotime($order['datetime'])) ?></td>
@@ -62,6 +65,15 @@ $orders = $stmt->fetchAll();
             </tr>
         <?php endforeach; ?>
     </table>
+    <div class="pagination">
+        <?php for ($i = 1; $i <= $result['total_pages']; $i++): ?>
+            <?php if ($i === $result['current_page']): ?>
+                <strong><?= $i ?></strong>
+            <?php else: ?>
+                <a href="?page=<?= $i ?>"><?= $i ?></a>
+            <?php endif; ?>
+        <?php endfor; ?>
+    </div>
     <div class="backupLinkContainer">
         <?= backupLink('../admin_dashboard.php'); ?>
     </div>

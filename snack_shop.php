@@ -30,7 +30,6 @@ if ($category === 'all') {
     $products = $stmt->fetchAll();
 }
 
-
 ?>
 
     <div id="main-part">
@@ -39,18 +38,19 @@ if ($category === 'all') {
         <?= displayLockedStatus(); ?>
 
         <form method="POST" action="order/process_order.php">
-
+            <?php $cartSummary = renderCartSummaryElements($pdo); ?>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
 
             <div id="live-summary">
-                <p>🧾 Total items selected: <span id="total-items">0</span></p>
-                <p>🍫 Items: <span id="selected-items">No item selected</span></p>
-                <p>💶 Estimated total: <span id="total-price">0.00</span> €</p>
+                <p>🧾 Total items selected: <span id="total-items"><?= $cartSummary['items'] ?></span></p>
+                <p>🍫 Items: <span id="selected-items"><?= $cartSummary['list'] ?></span></p>
+                <p>💶 Estimated total: <span id="total-price"><?= $cartSummary['price'] ?></span> €</p>
             </div>
+
             <div id="floating-summary" class="hidden">
-                <p>🧾 Total items selected: <span id="floating-items">0</span></p>
-                <p>🍫 Items: <span id="floating-selected-items">No item selected</span></p>
-                <p>💶 Estimated total: <span id="floating-price">0.00</span> €</p>
+                <p>🧾 Total items selected: <span id="floating-items"><?= $cartSummary['items'] ?></span></p>
+                <p>🍫 Items: <span id="floating-selected-items"><?= $cartSummary['list'] ?></span></p>
+                <p>💶 Estimated total: <span id="floating-price"><?= $cartSummary['price'] ?></span> €</p>
             </div>
 
             <div class="product-grid">
@@ -75,7 +75,8 @@ if ($category === 'all') {
                                     id="quantity_<?= $product['id'] ?>"
                                     min="0"
                                     max="<?= $product['stock_quantity'] ?>"
-                                    value="0"
+                                    value="<?= $_SESSION['cks_cart'][$product['id']] ?? 0 ?>"
+
                                     data-price="<?= $product['price'] ?>"
                                 >
                                 <p class="selected-count">Selected: <span>0</span></p>
@@ -87,8 +88,8 @@ if ($category === 'all') {
 
             <?php if ($isLoggedIn && !$isLocked): ?>
                 <div id="order-summary">
-                    <button class="shop_submit_button" type="submit" onclick="return confirmOrder()">✅ Order</button>
-                    <button class="shop_clear_button" type="reset">❌ Clear</button>
+                    <button class="shop_submit_button" type="submit" id="submit-order">✅ Order</button>
+                    <button type="button" class="shop_clear_button" id="clear-cart">❌ Clear</button>
                 </div>
             <?php endif; ?>
         </form>

@@ -3,9 +3,9 @@ require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../config/db_connect.php';
 checkAdmin();
 
-$stmt = $pdo->prepare("SELECT * FROM news ORDER BY created_at DESC");
-$stmt->execute();
-$news= $stmt->fetchAll();
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$result = paginate($pdo, 'news', $page, 5, 'id DESC');
+$news = $result['items'];
 
 ?>
 <div id="main-part">
@@ -28,6 +28,15 @@ $news= $stmt->fetchAll();
     </tr>
     <?php endforeach; ?>
     </table>
+    <div class="pagination">
+        <?php for ($i = 1; $i <= $result['total_pages']; $i++): ?>
+            <?php if ($i === $result['current_page']): ?>
+                <strong><?= $i ?></strong>
+            <?php else: ?>
+                <a href="?page=<?= $i ?>"><?= $i ?></a>
+            <?php endif; ?>
+        <?php endfor; ?>
+    </div>
     <div class="backupLinkContainer">
         <?= backupLink('../admin_dashboard.php'); ?>
     </div>

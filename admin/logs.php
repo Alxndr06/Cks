@@ -1,10 +1,13 @@
 <?php
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../config/db_connect.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 checkAdmin();
 
-$stmt = $pdo->query("
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$queryBase = "
     SELECT logs.id, logs.admin_id, logs.target_id, 
            adminUser.username AS admin_username, 
            targetUser.username AS target_username,
@@ -13,8 +16,12 @@ $stmt = $pdo->query("
     LEFT JOIN users AS adminUser ON logs.admin_id = adminUser.id
     LEFT JOIN users AS targetUser ON logs.target_id = targetUser.id
     ORDER BY logs.created_at DESC
-");
-$logs = $stmt->fetchAll();
+";
+
+$countQuery = "SELECT COUNT(*) FROM logs";
+
+$result = paginateQuery($pdo, $queryBase, $countQuery, $page, 10);
+$logs = $result['items'];
 ?>
 
     <div id="main-part">
@@ -42,6 +49,15 @@ $logs = $stmt->fetchAll();
                     </tr>
                 <?php endforeach; ?>
             </table>
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $result['total_pages']; $i++): ?>
+                    <?php if ($i === $result['current_page']): ?>
+                        <strong><?= $i ?></strong>
+                    <?php else: ?>
+                        <a href="?page=<?= $i ?>"><?= $i ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </div>
             <div class="backupLinkContainer">
                 <?= backupLink('admin_dashboard.php'); ?>
             </div>
