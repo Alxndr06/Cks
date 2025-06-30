@@ -4,8 +4,6 @@ getCsrfToken();
 checkAdmin();
 
 //Récupération de la liste des utilisateurs
-$stmt = $pdo->query("SELECT id, username, email, note, total_spent, role, locked, is_active FROM users");
-$users = $stmt->fetchAll();
 
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $result = paginate($pdo, 'users', $page, 25, 'id ASC');
